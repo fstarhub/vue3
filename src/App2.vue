@@ -2,8 +2,8 @@
  * @Description: 
  * @Autor: fengshuai
  * @Date: 2021-06-19 12:17:48
- * @LastEditors: fengshuai
- * @LastEditTime: 2021-06-22 08:50:38
+ * @LastEditors: 冯帅
+ * @LastEditTime: 2021-06-22 23:17:43
 -->
 <template>
   <div class="demo">
@@ -12,6 +12,9 @@
     <ul>
       <li v-for="(stu, index) in state.stus" :key="stu.id" @click="remStu(index)">{{stu.name}} --- {{stu.age}}</li>
     </ul>
+    <!-- <p>响应式对象的值是{{state1}}</p> -->
+    <p>响应式对象的值是{{state2}}</p>
+    <button @click="changeFn">修改响应式数据值</button>
   </div>
 </template>
 
@@ -44,6 +47,28 @@ export default {
   },
   setup() {
     // ref注意点：ref函数只能监听简单类型的变化，不能监听复杂类型的变化（数组/对象）
+    /**
+     * 1.什么是reactive?
+     *  reatctive是vue3中提供的实现响应数据的方法
+     * 在vue2中响应式数据是通过的findProperty来实现的，二vue3中响应式数据是通过ES6的Proxy来实现的
+     * 2.reactive注意点
+     * reactive参数必须是对象（json/arr）
+     *  如果给reactive传递了其他对象，默认情况下修改对象，界面不会自动更新，如果想更新，可以通过重新复制的方式
+     * 
+     */
+    // 创建响应式数据，本质：就是传入的数据包装成一个Proxy对象
+    // let state1 = reactive(123)
+    // let state2 = reactive([1,4,8])
+    let state2 = reactive(new Date())
+    function changeFn() {
+      // state1 = 666 // 由于在创建响应式数据的时候传递的不是一个对象，所以无法实现响应式
+      // state2[0] = 66
+      // state2.setDate(state2.getDate + 1) //直接修改以前的，界面不会更新
+      // 重新复制
+      const newTime = new Date().getDate() + 1
+      state2 = newTime
+      console.log(state2)
+    }
     /*
     let state = reactive({
       stus: [
@@ -61,7 +86,7 @@ export default {
      * this.option()
      */
     let {state, remStu} = useRemoveStudent()
-    return {state, remStu}
+    return {state, remStu, changeFn,state2}
   }
 }
 function useRemoveStudent() {

@@ -33,7 +33,9 @@ export default {
     setup:
     Created: 组件刚刚被创建出来,组件的data和methods已经初始化好
   4.setup 注意点
-    由于
+    由于在执行setup函数的时候，爱没有执行created生命周期方法，所以在setup函数中，是无法使用data和methods
+    由于我们不能再setup函数中使用data和methods，所以vue为了避免我们错误的使用，他直接将setup函数中的this修改成了undefined
+    setup函数只能是同步的，不能是异步的
   */
   methods: {
     option() {
@@ -53,6 +55,11 @@ export default {
     function remStu(index) {
       state.stus = state.stus.filter((item, order) => index !== order)
     }*/
+    /**
+     * console.log(this) // undefined
+     * console.log(this.msg)
+     * this.option()
+     */
     let {state, remStu} = useRemoveStudent()
     return {state, remStu}
   }

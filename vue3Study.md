@@ -25,7 +25,7 @@
 
   > vue2中无论元素是否参与更新，每次都会重新创建   
   > vue3中对于不参与更新的元素，只会被创建一次，之后会在每次渲染时后被不停的复用   
-  ```
+  ```html
     <div>
       <p>Hello World!</p>
       <p>Hello World!</p>
@@ -35,7 +35,7 @@
   ```  
   静态提升前
 
-  ```
+  ```js
     export function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (_openBlock(), _createBlock("div", null, [
         _createVNode("p", null, "Hello World!"),
@@ -47,7 +47,7 @@
   ```
   静态提升后
 
-  ```
+  ```js
     const _hoisted_1 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
     const _hoisted_2 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
     const _hoisted_3 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
@@ -64,13 +64,13 @@
 + cacheHandlers 事件侦听器缓存
 
   > 默认情况下onClick会被视为动态绑定，所以每次都会去追踪它的变化，但是因为是同一个函数，所以没有追踪变化，直接缓存起来复用即可    
-  ```
+  ```html
     <div>
       <button @click="onClick"></button>
     </div>
   ```
   开启事件监听缓
-    ```
+    ```js
     export function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (_openBlock(), _createBlock("div", null, [
         _createVNode("button", { onClick: _ctx.onClick }, null, 8 /* PROPS */, ["onClick"])
@@ -78,7 +78,7 @@
     }
   ```
   开启事件监听缓存后
-    ```
+    ```js
     export function render(_ctx, _cache, $props, $setup, $data, $options) {
       return (_openBlock(), _createBlock("div", null, [
         _createVNode("button", {

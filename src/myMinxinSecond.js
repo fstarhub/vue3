@@ -1,4 +1,4 @@
-const miXin = {
+const miXinSecond = {
   data() {
     return {
       name: 'mixin---我是米心中的数据Second',
@@ -7,7 +7,8 @@ const miXin = {
     }
   },
   beforeCreate() {
-    console.log('mixin---- bebeforeCreate' + this.name)
+    // console.log('mixin---- bebeforeCreate' + this.name)
+    console.log('---------我是第二个米心-----------')
   },
   created() {
     console.log('mixin--- created' + this.name)
@@ -56,4 +57,4 @@ const miXin = {
   },
 }
 
-export default miXin
+export default miXinSecond

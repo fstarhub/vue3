@@ -7,7 +7,7 @@
       <hr/>
 
       <!-- <input v-focus v-model="num2"> -->
-      <input type="number" v-focus v-model="num1">
+      <input type="number" v-model="num1">
       <span>{{result}}</span>
       <button @click="getCount(num1)">获取数字的平方值</button>
       <br/>
@@ -23,6 +23,12 @@
       <hr/>
 
       <component1></component1>
+      <hr/>
+
+      <!-- Filters are deprecated -->
+      <!-- <h3>{{a | upperL}}</h3> -->
+
+      <!-- <p>我的车是{{car}}</p> -->
     </el-main>
   </el-container>
 </template>
@@ -30,6 +36,7 @@
 import { ref } from 'vue'
 import myMixin from './myMinxin'
 export default {
+  name: 'App',
   mixins: [myMixin],
   directives: {
     focus: {
@@ -39,16 +46,23 @@ export default {
       }
     }
   },
-  name: 'App',
+  filters: {
+    upperL(value) {
+      console.log(value) // 代表管道符前面的数据
+      return value.toUpperCase() // 必须return对前面数据的处理
+    }
+  },
   data() {
     return {
-      num2: ''
+      num2: '',
+      a: 'hello'
     }
   },
   setup() {
     let num1 = ref(2)
     let name1 = ref('易烊千玺')
     let appMessage = ref('我是app3组件数据')
+    // let a = ref('hello')
     // function changeName() {
     //   console.log(this.changeData, '====')
     //   return this.changeData = 'lisi' + Math.random()

@@ -1,8 +1,16 @@
 
+// import mixinSecond from  './myMinxinSecond.js'
 import component1 from './components/componet1.vue'
 // import Vue from 'vue'
 const miXin = {
-  name: 'mixin', // 思考：最终会取哪一个那么？米心or组件
+  // name: 'mixin', // 思考：最终会取哪一个那么？米心or组件
+  // props: {
+  //   car: {
+  //     type: String,
+  //     default: '宝马'
+  //   }
+  // },
+  // minxins: [mixinSecond],
   components: {
     component1
   },

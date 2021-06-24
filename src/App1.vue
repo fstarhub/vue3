@@ -1,13 +1,22 @@
 <!--  -->
 <template>
   <div class="demo">
+    <!-- 注意点：如果是通过ref创建的数据，那么在template中使用的时候不用通过.value来获取，因为vue会自动给我们添加.value -->
+    <!-- ref和reactive区别：如果在template中使用的时ref类型中的数据，vue会自动添加.value，
+      如果在template中使用的时reactive类型中的数据，vue不会自动添加.value，
+      vue时如何决定是否需要添加.value的？
+      vue在解析数据之前，会自动判断这个属性是否时ref类型的
+      如果时就自动添加__v_ref来判断的，如果有这个私有属性，并且取值魏true，那么就道标是一个ref类型的数据
+     -->
     <p>{{count}}</p>
     <button @click="clickFn">按钮</button>
   </div>
 </template>
 
 <script>
-import {ref} from 'vue'
+// import {ref} from 'vue'
+import {reactive} from 'vue'
+import {isRef, isReactive} from 'vue'
 export default {
   name: 'App',
   components: {},
@@ -16,14 +25,26 @@ export default {
 
   //   }
   // },
-
+    /**
+     * 1.什么时ref?
+     * -ref和reactive一样，也是用来实现响应式数据的方法
+     * -由于reactive必须传递一个对象，所以导致在企业开发中如果想只让某个变量实现响应式的时候会非常麻烦，所以vue就给我们提供了ref方法，实现对简单值的监听
+     * 2.ref本质
+     * -ref底层的本质其实就是reactive，系统会自动根据我们给ref传入的值将它转换成ref(xx) -> reactive({value: xx})
+     * 3.ref注意点
+     * -在vue中使用ref的值不用通过value获取
+     * -在js中使用ref的值不许通过value获取
+     */
   //setup函数是组合API的入口函数
   setup() {
     // let count = 0 // vue不能监听到这个变量
     // 定义一个count变量，初始值为0，变量发生改变后，vue会自动更新UI
-    let count = ref(0)
+    // let count = ref(0)
+    let count = reactive({vlaue: 19})
     function clickFn () {
       // alert('diainjile')
+      console.log(isRef(count))
+      console.log(isReactive(count))
       console.log(count, '-=-')
     }
     // 注意：在组合API中定义的变量/方法，要想在外界使用，必须通过return{xxx,xxx}暴露出去

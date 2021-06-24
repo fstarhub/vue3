@@ -15,11 +15,25 @@
     <!-- <p>响应式对象的值是{{state1}}</p> -->
     <p>响应式对象的值是{{state2}}</p>
     <button @click="changeFn">修改响应式数据值</button>
+
+    <!-- <p>{{state3.a}}</p>
+    <p>{{state3.gf.b}}</p>
+    <p>{{state3.gf.f.c}}</p>
+    <p>{{state3.gf.f.s.d}}</p>
+    <button @click="listen">监听属性</button> -->
+
+
+    <p>{{state4.a}}</p>
+    <p>{{state4.gf.b}}</p>
+    <p>{{state4.gf.f.c}}</p>
+    <p>{{state4.gf.f.s.d}}</p>
+    <button @click="listenRef">监听属性</button>
   </div>
 </template>
 
 <script>
 import {reactive} from 'vue'
+import {ref} from 'vue'
 export default {
   name: 'App',
   components: {},
@@ -40,6 +54,14 @@ export default {
     由于我们不能再setup函数中使用data和methods，所以vue为了避免我们错误的使用，他直接将setup函数中的this修改成了undefined
     setup函数只能是同步的，不能是异步的
   */
+
+  /**
+   * 1.递归监听
+   *  默认情况下，无论是通过ref还是reactive都是递归监听
+   * 2.递归监听存在的问题
+   *  如果数据量将达，非常消耗性能
+   * 
+   */
   methods: {
     option() {
       alert(this.msg)
@@ -85,8 +107,51 @@ export default {
      * console.log(this.msg)
      * this.option()
      */
+    // let state3 = reactive({
+    //     a: 'a',
+    //     gf: {
+    //       b:'b',
+    //       f: {
+    //         c: 'c',
+    //         s: {
+    //           d: 'd'
+    //         }
+    //       }
+    //     }
+    //   })
+    //   function listen() {
+        // console.log(state3)
+        // console.log(state3.gf)
+        // console.log(state3.gf.f)
+        // console.log(state3.gf.f.s)
+    //     state3.a = '1'
+    //     state3.gf.b = '2'
+    //     state3.gf.f.c = '3'
+    //     state3.gf.f.s.d = '4'
+    //   }
+    let state4 = ref({
+        a: 'a',
+        gf: {
+          b:'b',
+          f: {
+            c: 'c',
+            s: {
+              d: 'd'
+            }
+          }
+        }
+      })
+      function listenRef() {
+        state4.value.a = '1'
+        state4.value.gf.b = '2'
+        state4.value.gf.f.c = '3'
+        state4.value.gf.f.s.d = '4'
+      }
     let {state, remStu} = useRemoveStudent()
-    return {state, remStu, changeFn,state2}
+    // return {state, remStu, changeFn,state2, state3,listen}
+    return {state, remStu, changeFn,state2, state4,listenRef}
+
+    
   }
 }
 function useRemoveStudent() {

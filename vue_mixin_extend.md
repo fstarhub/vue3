@@ -148,7 +148,12 @@
 
   `<p>Walter White aka Heisenberg</p>`
 
-  
+  \*注意：
+            
+  - 只能使用一个extends对象，多个无效，extends会先于mixins执行
 
-
+  ## 总结
+  1. 使用方法与作用：都是通过外部增加对象的形式，它接收的参数是简单的选项对象或构造函数。对使用vue组件时进行扩展
+  2. mixin使用方式简单，extend相对比较繁琐（用的少）
+  3. 优先顺序：extend触发优先级较mixin高
 

@@ -49,6 +49,14 @@ export default {
    * 如果是通过shallowReactive创建的数据，vue会监听第一层的变化包装成proxy，修改第一层变化的数据，里层也会监听，如果不修改第一层，里层就不会被监听到
    *  如果是通过shallowRef创建数据，那么vue监听的是.value的变化，并不是第一层的变化
    */
+    /**
+     * 本职归纳：
+     * ref -> reactive
+     * ref(10) -> reactive({value: 10})
+     * shallowRef -> shallowReactive
+     * shallwRef -> shallowReactive({value: 10})
+     * 所以如果是通过shallowRef创建的数据，他监听的是.value的变化，因为底层value才是第一层
+     */
   methods: {
   },
   setup() {

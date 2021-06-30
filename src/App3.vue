@@ -2,8 +2,8 @@
   <el-container>
     <el-main>
       <div></div>
-      <p>使用米心中的数据 ==== {{name}}</p>
-      <p>app3组件数据 ==== {{appMessage}}</p>
+      <!-- <p>使用米心中的数据 ==== {{name}}</p> -->
+      <!-- <p>app3组件数据 ==== {{appMessage}}</p> -->
       <hr/>
 
       <!-- <input v-focus v-model="num2"> -->
@@ -22,8 +22,8 @@
       <button @click="changeName">改变名字</button>
       <hr/>
 
-      <component1></component1>
-      <hr/>
+      <!-- <component1></component1> -->
+      <!-- <hr/> -->
 
       <!-- Filters are deprecated -->
       <!-- <h3>{{a | upperL}}</h3> -->
@@ -38,20 +38,20 @@ import myMixin from './myMinxin'
 export default {
   name: 'App',
   mixins: [myMixin],
-  directives: {
-    focus: {
-      // 指令的定义
-      inserted: function (el) {
-        el.focus()
-      }
-    }
-  },
-  filters: {
-    upperL(value) {
-      console.log(value) // 代表管道符前面的数据
-      return value.toUpperCase() // 必须return对前面数据的处理
-    }
-  },
+  // directives: {
+  //   focus: {
+  //     // 指令的定义
+  //     inserted: function (el) {
+  //       el.focus()
+  //     }
+  //   }
+  // },
+  // filters: {
+  //   upperL(value) {
+  //     console.log(value) // 代表管道符前面的数据
+  //     return value.toUpperCase() // 必须return对前面数据的处理
+  //   }
+  // },
   data() {
     return {
       num2: '',

@@ -124,3 +124,7 @@
 
   ## 4.2 custom renderer API
     1. 
+
+  ## vue3 响应式数据本事
+    在vue2.x中是通过difineProperty来实现响应式数据的
+    在vue3.x中是通过Proxy来实现响应式数据的

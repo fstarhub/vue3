@@ -519,3 +519,41 @@ Proxy作为新标准将受到浏览器厂商重点持续的性能优化，也就
 
 当然,Proxy的劣势就是兼容性问题,而且无法用polyfill磨平,因此Vue的作者才声明需要等到下个大版本(3.0)才能用Proxy重写
 
+### 四.Object.defineProperty VS Proxy
+
+#### **1. `Object.defineProperty `只能劫持对象的属性，而 Proxy 是直接代理对象。**
+
+由于 `Object.defineProperty` 只能对属性进行劫持，需要遍历对象的每个属性，如果属性值也是对象，则需要深度遍历。而 Proxy 直接代理对象，不需要遍历操作。
+
+#### **2. `Object.defineProperty `对新增属性需要手动进行 Observe。**
+
+由于 `Object.defineProperty `劫持的是对象的属性，所以新增属性时，需要重新遍历对象，对其新增属性再使用 `Object.defineProperty` 进行劫持。
+
+也正是因为这个原因，使用 Vue 给 data 中的数组或对象新增属性时，需要使用 vm.$set 才能保证新增的属性也是响应式的。
+
+#### **3. `Proxy`支持 13 种拦截操作，这是 `defineProperty `所不具有的。** 
+
+- **`get(target, propKey, receiver)`**：拦截对象属性的读取，比如 `proxy.foo` 和`proxy['foo']`。
+- **`set(target, propKey, value, receiver)`**：拦截对象属性的设置，比如`proxy.foo = v` 或 `proxy['foo'] = v`，返回一个布尔值。
+- **`has(target, propKey)`**：拦截 `propKey in proxy` 的操作，返回一个布尔值。
+- **`deleteProperty(target, propKey)`**：拦截 `delete proxy[propKey]` 的操作，返回一个布尔值。
+- **`ownKeys(target)`**：拦截`Object.getOwnPropertyNames(proxy)、Object.getOwnPropertySymbols(proxy)、Object.keys(proxy)、for...in`循环，返回一个数组。该方法返回目标对象所有自身的属性的属性名，而 `Object.keys()` 的返回结果仅包括目标对象自身的可遍历属性。
+- **`getOwnPropertyDescriptor(target, propKey)`**：拦截`Object.getOwnPropertyDescriptor(proxy, propKey)`，返回属性的描述对象。
+- **`defineProperty(target, propKey, propDesc)`**：拦截`Object.defineProperty(proxy, propKey, propDesc）`、`Object.defineProperties(proxy, propDescs)`，返回一个布尔值。
+- **`preventExtensions(target)`**：拦截 `Object.preventExtensions(proxy)`，返回一个布尔值。
+- **`getPrototypeOf(target)`**：拦截 `Object.getPrototypeOf(proxy)`，返回一个对象。
+- **`isExtensible(target)`**：拦截 `Object.isExtensible(proxy)`，返回一个布尔值。
+- **`setPrototypeOf(target, proto)`**：拦截 `Object.setPrototypeOf(proxy, proto)`，返回一个布尔值。如果目标对象是函数，那么还有两种额外操作可以拦截。
+- **`apply(target, object, args)`**：拦截 `Proxy` 实例作为函数调用的操作，比如`proxy(...args)、proxy.call(object, ...args)、proxy.apply(...)`。
+- **`construct(target, args)`**：拦截 `Proxy` 实例作为构造函数调用的操作，比如`new proxy(...args)`
+
+#### **4. 新标准性能红利**
+
+`Proxy` 作为新标准，从长远来看，JS 引擎会继续优化 `Proxy`，但 `getter` 和 `setter` 基本不会再有针对性优化
+
+####  **5. `Proxy` 兼容性差** 
+
+`Proxy` 对于 IE 浏览器来说简直是灾难。
+
+并且目前并没有一个完整支持 Proxy 所有拦截方法的 Polyfill 方案，有一个 Google 编写的 proxy-polyfill 也只支持了 get、set、apply、construct 四种拦截，可以支持到 IE9+ 和 Safari 6
+

@@ -4,7 +4,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-08-10 17:31:45
+ * @LastEditTime: 2021-08-11 16:42:05
 -->
 
 # html
@@ -296,9 +296,105 @@ geolacation定位用户位置信息
 
 节流：高频触发事件，n秒内只执行一次，稀释执行频率
 
+**原理**：用时间戳判断是否已到回调该执行时间；记录上次执行的时间戳，每次触发事件执行回调，回调中判断当前时间戳距离上次执行时间戳的间隔是否已经到达规定时间段，如果是，则执行，并更新上次执行的时间戳，如此循环
+
+```js
+function throttle(fn, delay) {
+  // 记录上一次函数触发的时间
+  var lastTime = 0;
+  return function() {
+    // 记录当前函数触发的时间
+    var nowTime = Date.now();
+    if (nowTime - lastTime > delay) {
+      // 修正this指向问题
+      fn.call(this);
+      // 同步时间
+      lastTime = nowTime;
+    }
+  }
+}
+document.onscroll = throttle(function() { 
+  console.log('scroll事件被触发了' + Date.now()) 
+}, 200)
+```
+
+```js
+function throttlePro(delay, action) {
+  var tId;
+  return function () {
+    var context = this;
+    var arg = arguments;
+    if (tId) return;
+    tId = setTimeout(function () {
+      action.apply(context, arg);
+      clearTimeout(tId);
+      // setTimeout 返回一个整数，clearTimeout 之后，tId还是那个整数,setInterval同样如此
+      tId = null;
+    }, delay);
+  }
+}
+```
+
+
+
 防抖：高频触发事件后n秒内函数只会执行一次，如果n秒内事件再次被触发，则重新计时
 
+## for of / for in
 
+## ES6 暴露方式
+
+1. 多行暴露
+
+   ```js
+   // a.js
+   export function a1() {
+       console.log('导出1')
+   }
+   export function a2() {
+       console.log('导出2')
+   }
+   ```
+
+   ```js
+   // index.js
+   // 解构赋值
+   import {a1, a2} from 'a.js'
+   ```
+
+2. 统一暴露
+
+   ```js
+   // b.js
+   function b1() {
+       console.log('导出1')
+   }
+   function b2() {
+       console.log('导出2')
+   }
+   export {b1,b2}
+   ```
+
+   ```js
+   // index.js
+   import {b1, b2} from 'b.js'
+   ```
+
+3. 默认暴露
+
+   ```js
+   // c.js
+   export default function c() {
+       console.log('默认导出')
+   }
+   ```
+
+   ```js
+   // index.js
+   import c from 'c.js'
+   c.c()
+   ```
+
+   
 
 # vue
 
@@ -451,3 +547,117 @@ XSS攻击：跨站脚本攻击，它允许恶意web用户将代码植入到提�
 
 ## 6. HTTPS加密传输数据
 
+# 网络
+
+## [url回车问题](https://zhuanlan.zhihu.com/p/78677852)
+
+输入url回车后发生了一下过程
+
+1. 输入地址。
+2. DNS解析。
+3. TCP连接。
+4. 发送http请求。
+5. 返回http响应。
+6. 浏览器解析渲染页面。
+7. 断开连接。
+
+### 1.输入地址
+
+当我们在浏览器输入地址的时候，浏览器已经在只能匹配到可能得到的url了，他会从历史记录，书签等地方，找到已经输入的字符串可能对应的 url，然后给出智能提示，让你可以补全url地址 
+
+### 2.DNS解析
+
+DNS解析的过程就是寻找哪台机器上有你需要资源的过程。当你在浏览器中输入一个地址时，例如[http://www.baidu.com](https://link.zhihu.com/?target=http%3A//www.baidu.com)，其实不是百度网站真正意义上的地址。互联网上每一台计算机的唯一标识是它的IP地址，但是IP地址并不方便记忆。用户更喜欢用方便记忆的网址去寻找互联网上的其它计算机，也就是上面提到的百度的网址。所以互联网设计者需要在用户的方便性与可用性方面做一个权衡，这个权衡就是一个网址到IP地址的转换，这个过程就是DNS解析。 
+
+### 3.TCP连接
+
+主机浏览器通过DNS解析得到了目标服务器的IP地址后，与服务器建立TCP连接。
+
+**TCP三次握手**：
+
+第一次握手：客户端将标志位SYN置为1,随机产生一个值为seq=J（J的取值范围为=1234567）的数据包到服务器，客户端进入SYN_SENT状态，等待服务端确认；
+
+第二次握手：服务端收到数据包后由标志位SYN=1知道客户端请求建立连接，服务端将标志位SYN和ACK都置为1，ack=J+1，随机产生一个值seq=K，并将该数据包发送给客户端以确认连接请求，服务端进入SYN_RCVD状态。
+
+第三次握手：客户端收到确认后，检查ack是否为J+1，ACK是否为1，如果正确则将标志位ACK置为1，ack=K+1，并将该数据包发送给服务端，服务端检查ack是否为K+1，ACK是否为1，如果正确则连接建立成功，完成三次握手，随后客户端A与服务端B之间可以开始传输数据了。
+
+为什么需要三次握手：
+
+三次握手的目的是“为了防止已失效的连接请求报文段突然又传送到了服务端，因而产生错误
+
+### 4.发送HTTP请求
+
+建立了TCP连接之后，发起一个http请求。一个典型的 http request header 一般需要包括请求的方法，例如 GET 或者 POST 等，不常用的还有 PUT 和 DELETE 、HEAD、OPTION以及 TRACE 方法。 
+
+### 5.返回HTTP响应
+
+服务器接受并处理完请求，返回 HTTP 响应，一个响应报文格式基本等同于请求报文，由响应行、响应头、空行、实体组成 
+
+### 6.浏览器解析渲染页面
+
+浏览器是一个边解析边渲染的过程。首先浏览器解析HTML文件构建DOM树，然后解析CSS文件构建渲染树，等到渲染树构建完成后，浏览器开始布局渲染树并将其绘制到屏幕上。这个过程比较复杂，涉及到两个概念: reflow(回流)和repain(重绘)。DOM节点中的各个元素都是以盒模型的形式存在，这些都需要浏览器去计算其位置和大小等，这个过程称为relow;当盒模型的位置,大小以及其他属性，如颜色,字体,等确定下来之后，浏览器便开始绘制内容，这个过程称为repain。页面在首次加载时必然会经历reflow和repain。reflow和repain过程是非常消耗性能的，尤其是在移动设备上，它会破坏用户体验，有时会造成页面卡顿。所以我们应该尽可能少的减少reflow和repain。
+
+浏览器两种渲染方式
+
+webkit的主要流程：
+
+![img](https://pic2.zhimg.com/80/v2-ad2b8a9617646bb212b70c556cdb5759_720w.jpg)
+
+Geoko的主要流程：
+
+![img](https://pic4.zhimg.com/80/v2-2eb78d456d03dcf2e02f78a1bd81896f_720w.jpg)
+
+
+
+### 7.断开连接
+
+TCP四次挥手：
+
+第一次挥手：Client发送一个FIN，用来关闭Client到Server的数据传送，Client进入FIN_WAIT_1状态。
+
+第二次挥手：Server收到FIN后，发送一个ACK给Client，确认序号为收到序号+1（与SYN相同，一个FIN占用一个序号），Server进入CLOSE_WAIT状态。
+
+第三次挥手：Server发送一个FIN，用来关闭Server到Client的数据传送，Server进入LAST_ACK状态。
+
+第四次挥手：Client收到FIN后，Client进入TIME_WAIT状态，接着发送一个ACK给Server，确认序号为收到序号+1，Server进入CLOSED状态，完成四次挥手
+
+## HTTP
+
+### 状态码系列
+
+**1XX：通知**
+
+1XX系列响应代码仅在与HTTP服务器沟通时使用
+
+**2xx：成功**
+
+ 2XX系列响应代码表明操作成功了 
+
+**3XX：重定向**
+
+3XX系列响应代码表明：客户端需要做些额外工作才能得到所需要的资源。它们通常用于GET请求。他们通常告诉客户端需要向另一个URI发送GET请求，才能得到所需的表示。那个URI就包含在Location响应报头里 
+
+**4XX：客户端错误**
+
+这些响应代码表明客户端出现错误。不是认证信息有问题，就是表示格式或HTTP库本身有问题。客户端需要自行改正
+
+**5XX：服务端错误**
+
+这些响应代码表明服务器端出现错误。一般来说，这些代码意味着服务器处于不能执行客户端请求的状态，此时客户端应稍后重试。有时，服务器能够估计客户端应在多久之后重试。并把该信息放在Retry-After响应报头里。
+
+5XX系列响应代码在数量上不如4XX系列多，这不是因为服务器错误的几率小，而是因为没有必要如此详细--对于服务器方面的问题，客户端是无能为力的
+
+### 常见状态码
+
+* 301 (Moved Permanently)  重定向 ，  览器会自动连接到新的URL
+
+* 302  (Found/找到) 临时重定向
+
+* 303  (See Other/参见其他信息)  临时重定向，必须使用get方式的请求
+
+* 404  (Not Found/未找到)  找不到系统资源
+
+* 401：(Unauthorized/未授权)  协议格式出现了问题
+*  403： (Forbidden/禁止)  服务器拒绝了你的请求
+*  500  (Internal Server Error/内部服务器错误)  服务器读取信息之中出错
+*  503： (Service Unavailable/服务无法获得) 表示服务器由于在维护或已经超载而无法响应

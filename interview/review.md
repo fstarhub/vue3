@@ -1,4 +1,5 @@
 <!--
+
  * @Description: 
  * @Version: 3.0
  * @Autor: 冯帅
@@ -335,11 +336,46 @@ function throttlePro(delay, action) {
 }
 ```
 
+**函数节流的应用场景**
 
+1. 需要间隔一定时间触发回调来控制函数调用频率：
+2. DOM 元素的拖拽功能实现（mousemove）
+3. 搜索联想（keyup）
+4. 计算鼠标移动的距离（mousemove）
+5. Canvas 模拟画板功能（mousemove）
+6. 射击游戏的 mousedown/keydown 事件（单位时间只能发射一颗子弹）
+7. 监听滚动事件判断是否到页面底部自动加载更多：给 scroll 加了 debounce 后，只有用户停止滚动后，才会判断是否到了页面底部；如果是 throttle 的话，只要页面滚动就会间隔一段时间判断一次
 
 防抖：高频触发事件后n秒内函数只会执行一次，如果n秒内事件再次被触发，则重新计时
 
-## for of / for in
+**原理：**第一次调用函数，创建一个定时器，在指定的时间间隔之后运行代码。当第二次调用该函数时，它会清除前一次的定时器并设置另一个。如果前一个定时器已经执行过了，这个操作就没有任何意义。然而，如果前一个定时器尚未执行，其实就是将其替换为一个新的定时器，然后延迟一定时间再执行
+
+```js
+<button id='btn'>按钮</button>
+<script type="text/javascript">
+function debounce(fn, delay) {
+    // 记录上一次的延时器
+    var timer = null;
+    return function() {
+        // 清除上一次延时器
+        clearTimeout(timer)
+        timer = setTimeout(function() {
+            fn.apply(this)
+        }, delay)
+    }
+}
+document.getElementById('btn').onclick = debounce(function() {
+    console.log('点击事件被触发' + Date.now())
+}, 1000)
+</script>
+```
+
+**上面用到了闭包的特性--可以使变量timer的值长期保存在内存中。**
+**函数防抖的应用场景**
+
+1. 对于连续的事件响应我们只需要执行一次回调：
+2. 每次 resize/scroll 触发统计事件
+3. 文本输入的验证（连续输入文字后发送 AJAX 请求进行验证，验证一次就好）
 
 ## ES6 暴露方式
 
@@ -406,6 +442,44 @@ function throttlePro(delay, action) {
 **watch**：支持异步（不支持缓存），数据变化会直接触发相应操作（immediate，deep）
 
 **computed**：支持缓存（不支持异步），依赖数据发生变化，才会重新计算（get，set）
+
+## 缓存路由
+
+**1.全部缓存**
+
+```vue
+<keep-alive>
+  <router-view></router-view>
+</keep-alive>
+```
+
+**2、缓存单个指定路由**
+
+```vue
+<keep-alive include="该路由的name名称">
+  <router-view></router-view>
+</keep-alive>
+```
+
+**3、缓存多个指定路由**
+
+```vue
+<keep-alive>
+  <router-view v-if="$route.meta.keepAlive"></router-view>
+</keep-alive>
+<router-view v-if="!$route.meta.keepAlive"></router-view>
+```
+
+使用两个 **router-view** 标签分别作为缓存和不缓存的路由出口，在路由配置的时候，只需要给要缓存的页面加上 **meta** 属性，然后添加 **keepAlive** 属性设置为 **true** 即可。例如：
+
+```js
+{
+ path:'/test',
+ name:'Test',
+ component: Test,
+ meta: {keepAlive: true} //true缓存 false不缓存
+}
+```
 
 ## hash与history区别
 

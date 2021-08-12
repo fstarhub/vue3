@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2021-07-27 10:49:30
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-07-27 10:49:50
+ * @LastEditTime: 2021-08-12 16:44:01
 -->
 
 ## CSS预处理
@@ -109,7 +109,7 @@ CSS 预处理器是一个能让你通过预处理器自己独有的语法来生�
 
 ### 优点
 
-虽然各种预处理器功能强大，但使用最多的，还是以下特性：变量（variables），代码混合（ mixins），嵌套（nested rules）以及 代码模块化(Modules)。
+虽然各种预处理器功能强大，**但使用最多的，还是以下特性：变量（variables），代码混合（ mixins），嵌套（nested rules）以及 代码模块化(Modules)**。
 
 接下来以 Sass 为例，展示一下这几个主要特性在预处理器中的实现：
 
@@ -226,7 +226,7 @@ body {
 
 ## 回归 CSS
 
-各种 CSS 预处理器在更新迭代的过程中，功能越来越繁杂花哨，但是绝大部分人用到的核心功能还是那几样：Variables、Mixing、Nested、Module，顶多再加上一些工具类函数
+各种 CSS 预处理器在更新迭代的过程中，功能越来越繁杂花哨，但是绝大部分人用到的核心功能还是那几样：Variables、Mixins、Nested、Module，顶多再加上一些工具类函数
 
 ### Variables in CSS
 

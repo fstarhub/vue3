@@ -37,8 +37,8 @@ MDN上这样写：
     console.log("foo");
   }
   baz();
-  ```
-  当我们调用baz()时，它会以此调用baz()→bar()→foo()。
+```
+当我们调用baz()时，它会以此调用baz()→bar()→foo()。
 
 对于foo()：调用位置是在bar()中。
 对于bar()：调用位置是在baz()中。
@@ -85,7 +85,7 @@ MDN上这样写：
     say.call(person,"FE"); // axuebin:25 FE
     say.apply(person,["FE"]); // axuebin:25 FE
   ```
-  可以看到，定义了一个say函数是用来输出name、age和job，其中本身没有name和age属性，我们将这个函数绑定到person这个对象上，输出了本属于person的属性，说明此时this是指向对象person的。
+可以看到，定义了一个say函数是用来输出name、age和job，其中本身没有name和age属性，我们将这个函数绑定到person这个对象上，输出了本属于person的属性，说明此时this是指向对象person的。
 
 如果传入一个原始值（字符串、布尔或数字类型）来当做this的绑定对象， 这个原始值会被转换成它的对象形式（new String()），这通常被称为“**装箱**”。
 
@@ -134,9 +134,10 @@ bind和call、apply有些相似。
     student.doSth(); // '若川'
     student.arrowDoSth2(); // 'window'
   ```
-  其实就是相当于箭头函数外的this是缓存的该箭头函数上层的普通函数的this。如果没有普通函数，则是全局对象（浏览器中则是window）。
+其实就是相当于箭头函数外的this是缓存的该箭头函数上层的普通函数的this。如果没有普通函数，则是全局对象（浏览器中则是window）。
 也就是说无法通过call、apply、bind绑定箭头函数的this(它自身没有this)。而call、apply、bind可以绑定缓存箭头函数上层的普通函数的this。
 比如：
+
   ```js
     var student = {
       name: '若川',

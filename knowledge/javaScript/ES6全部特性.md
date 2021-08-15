@@ -175,7 +175,7 @@ ES6是ECMA为JavaScript制定的第6个标准版本
 
 -  **简洁表示法**：直接写入变量和函数作为对象的属性和方法(`{ prop, method() {} }`)
 -  **属性名表达式**：字面量定义对象时使用`[]`定义键(`[prop]`，不能与上同时使用)
-- **方法的`name属性**：返回方法函数名 
+- **方法的name属性**：返回方法函数名 
   - 取值函数(getter)和存值函数(setter)：`get/set 函数名`(属性的描述对象在`get`和`set`上)
   - bind返回的函数：`bound 函数名`
   - Function构造函数返回的函数实例：`anonymous`
@@ -739,31 +739,28 @@ class Student extends MixClass(Person, Kid) {}
 
 - 命令 
 
-  - export：规定模块对外接口 
-
+  - **export**：规定模块对外接口 
     - **默认导出**：`export default Person`(导入时可指定模块任意名称，无需知晓内部真实名称)
     - **单独导出**：`export const name = "Bruce"`
     - **按需导出**：`export { age, name, sex }`(推荐)
     - **改名导出**：`export { name as newName }`
-
-  - import：导入模块内部功能 
-
+    
+  - **import**：导入模块内部功能 
     - **默认导入**：`import Person from "person"`
     - **整体导入**：`import * as Person from "person"`
     - **按需导入**：`import { age, name, sex } from "person"`
     - **改名导入**：`import { name as newName } from "person"`
     - **自执导入**：`import "person"`
     - **复合导入**：`import Person, { name } from "person"`
-
-  - 复合模式：`export命令`和`import命令`结合在一起写成一行，变量实质没有被导入当前模块，相当于对外转发接口，导致当前模块无法直接使用其导入变量 
-
+    
+  - **复合模式**：`export命令`和`import命令`结合在一起写成一行，变量实质没有被导入当前模块，相当于对外转发接口，导致当前模块无法直接使用其导入变量 
     - **默认导入导出**：`export { default } from "person"`
     - **整体导入导出**：`export * from "person"`
     - **按需导入导出**：`export { age, name, sex } from "person"`
     - **改名导入导出**：`export { name as newName } from "person"`
     - **具名改默认导入导出**：`export { name as default } from "person"`
     - **默认改具名导入导出**：`export { default as name } from "person"`
-
+  
 - 继承：`默认导出`和`改名导出`结合使用可使模块具备继承性
 
 - 设计思想：尽量地静态化，使得编译时就能确定模块的依赖关系，以及输入和输出的变量
@@ -780,30 +777,28 @@ class Student extends MixClass(Person, Kid) {}
 
 > 加载方式
 
-- 运行时加载
+- **运行时加载**
   - 定义：整体加载模块生成一个对象，再从对象上获取需要的属性和方法进行加载(全部加载)
   - 影响：只有运行时才能得到这个对象，导致无法在编译时做静态优化
-- 编译时加载
+- **编译时加载**
   - 定义：直接从模块中获取需要的属性和方法进行加载(按需加载)
   - 影响：在编译时就完成模块加载，效率比其他方案高，但无法引用模块本身(**本身不是对象**)，可拓展JS高级语法(**宏和类型校验**)
 
 > 加载实现
 
-- 传统加载：通过`<script>`进行同步或异步加载脚本 
-
-  - 同步加载：``
-  - Defer异步加载：``(顺序加载，渲染完再执行)
-  - Async异步加载：``(乱序加载，下载完就执行)
-
+- ***传统加载**：通过`<script>`进行同步或异步加载脚本 
+  - 同步加载：`<script src=""></script>`
+  - Defer异步加载：`<script src="" defer></script>`(顺序加载，渲染完再执行)
+  - Async异步加载：`<script src="" async></script>`(乱序加载，下载完就执行)
+  
 - **模块加载**：`<script type="module" src=""></script>`(默认是Defer异步加载)
 
 > CommonJS和ESM的区别
 
 - `CommonJS`输出`值的拷贝`，`ESM`输出`值的引用`
-
   - `CommonJS`一旦输出一个值，模块内部的变化就影响不到这个值
   - `ESM`是动态引用且不会缓存值，模块里的变量绑定其所在的模块，等到脚本真正执行时，再根据这个只读引用到被加载的那个模块里去取值
-
+  
 - `CommonJS`是运行时加载，`ESM`是编译时加载 
 
   - `CommonJS`加载模块是对象(即`module.exports`)，该对象只有在脚本运行完才会生成

@@ -1,4 +1,5 @@
 <!--
+
  * @Description: 
  * @Autor: fengshuai
  * @Date: 2021-07-28 10:27:24
@@ -100,7 +101,7 @@ ViewModel做了两件事情。
 
 > 脏值检查（angular.js）
 
-> 数据劫持（vue.js
+> 数据劫持（vue.js)
 
  **发布者-订阅者模式:** 一般通过sub, pub的方式实现数据和视图的绑定监听，更新数据方式通常做法是 `vm.set('property', value)`，这里有篇文章讲的比较详细，有兴趣可点[这里](http://www.html-js.com/article/Study-of-twoway-data-binding-JavaScript-talk-about-JavaScript-every-day) 
 

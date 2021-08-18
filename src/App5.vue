@@ -2,8 +2,8 @@
  * @Description: 
  * @Autor: fengshuai
  * @Date: 2021-06-19 12:17:48
- * @LastEditors: 冯帅
- * @LastEditTime: 2021-06-22 23:17:43
+ * @LastEditors: fengshuai
+ * @LastEditTime: 2021-08-18 15:22:23
 -->
 <template>
   <div class="demo">
@@ -50,7 +50,7 @@ export default {
    *  如果是通过shallowRef创建数据，那么vue监听的是.value的变化，并不是第一层的变化
    */
     /**
-     * 本职归纳：
+     * 本质归纳：
      * ref -> reactive
      * ref(10) -> reactive({value: 10})
      * shallowRef -> shallowReactive

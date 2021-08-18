@@ -44,7 +44,7 @@ Original message: "Hello"
 Computed reversed message: "olleH"
 ```
 
- **计算属性是基于它们的依赖进行缓存的。只在相关依赖发生改变时它们才会重新求值。值得注意的是“reversedMessage”不能在组件的props和data中定义，否则会报错。**
+**计算属性是基于它们的依赖进行缓存的。只在相关依赖发生改变时它们才会重新求值。值得注意的是“reversedMessage”不能在组件的props和data中定义，否则会报错。**
 
 #### 2.watch
 

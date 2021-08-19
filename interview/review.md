@@ -647,7 +647,7 @@ router.beforeEach((to, from, next) => {
 })
 ```
 
-##  全局后置钩子
+###  全局后置钩子
 
 你也可以注册全局后置钩子，然而和守卫不同的是，这些钩子不会接受 `next` 函数也不会改变导航本身：
 
@@ -755,6 +755,34 @@ beforeRouteLeave (to, from, next) {
 10. 调用全局的 `afterEach` 钩子。
 11. 触发 DOM 更新。
 12. 调用 `beforeRouteEnter` 守卫中传给 `next` 的回调函数，创建好的组件实例会作为回调函数的参数传入
+
+## vuex常用API
+
+Vuex 是一种状态管理模式。state：驱动应用的数据源；view：以声明方式将 state 映射到视图；actions: 响应在 view 上的用户输入导致的状态变化。
+
+1.State: 提供一个响应式数据
+
+* this.$store.state.xxx / mapState 取值
+
+2.Getter：借助 Vue 的计算属性 computed 来实现缓存
+
+* this.$store.getters.xxx / mapGetters 取值
+
+3.Mutation：更改 state 方法
+
+* this.$store.commit('xxx') / mapMutations 赋值
+
+4.Action：触发 mutation 方法
+
+* this.$store.dispatch('xxx') / mapActions 赋值
+
+5.Module：Vue.set 动态添加 state 到响应式数据中
+
+（1）开启命名空间 namespaced: true
+
+（2）嵌套模块不用过深，尽量扁平化
+
+（3）灵活应用 createNamespacedHelpers
 
 ## 缓存路由
 

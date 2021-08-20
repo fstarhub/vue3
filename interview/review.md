@@ -167,7 +167,6 @@ geolacation定位用户位置信息
    * 群组
    * 属性
    * 伪元素
-
 1. 边框圆角
 2. 盒阴影
 3. 背景
@@ -177,6 +176,40 @@ geolacation定位用户位置信息
 7. 动画
 8. 伸缩盒
 9. 多列
+
+### 选择器
+
+css选择器
+
+1. 标签选择器（如：body,div,p,ul,li）
+
+2. id选择器（如：id="name",id="name_txt"）
+
+3. 类选择器（如：class="name",class="name_txt"）
+4. 属性选择器（[title='mytitle']）
+
+4. 后代选择器（如：#head .nav ul li 从父集到子孙集的选择器）
+
+5. 子元素选择器（如：div>p ,带大于号>）
+
+6. 伪类选择器（如：就是链接样式,a元素的伪类，4种不同的状态：link、visited、active、hover。）
+7. 伪元素选择器 （::fater,::before）
+
+选择器权重
+
+1. id选择器（#myid）
+
+2. 类选择器（.myclassname）
+
+3. 标签选择器（div,h1,p）
+
+4. 子选择器（ul < li）
+
+5. 后代选择器（li a）
+
+6. 伪类选择（a:hover,li:nth-child）
+
+
 
 ## position
 
@@ -552,6 +585,63 @@ fetch号称是AJAX的替代品，是在ES6出现的，使用了ES6中的promise�
 **watch**：支持异步（不支持缓存），数据变化会直接触发相应操作（immediate，deep）
 
 **computed**：支持缓存（不支持异步），依赖数据发生变化，才会重新计算（get，set）
+
+## v-if vs v-show
+
+`v-if` 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+
+`v-if` 也是**惰性的**：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
+
+相比之下，`v-show` 就简单得多——不管初始条件是什么，元素总是会被渲染，并且只是简单地基于 CSS 进行切换。
+
+一般来说，`v-if` 有更高的切换开销，而 `v-show` 有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用 `v-show` 较好；如果在运行时条件很少改变，则使用 `v-if` 较好
+
+## v-if vs v-for
+
+> **不推荐**同时使用 `v-if` 和 `v-for`。请查阅[风格指南](https://cn.vuejs.org/v2/style-guide/#避免-v-if-和-v-for-用在一起-必要)以获取更多信息。
+
+当 `v-if` 与 `v-for` 一起使用时，`v-for` 具有比 `v-if` 更高的优先级。请查阅[列表渲染指南](https://cn.vuejs.org/v2/guide/list.html#v-for-with-v-if)以获取详细信息。
+
+当它们处于同一节点，`v-for` 的优先级比 `v-if` 更高，这意味着 `v-if` 将分别重复运行于每个 `v-for` 循环中。当你只想为*部分*项渲染节点时，这种优先级的机制会十分有用，如下：
+
+```
+<li v-for="todo in todos" v-if="!todo.isComplete">
+  {{ todo }}
+</li>
+```
+
+上面的代码将只渲染未完成的 todo。
+
+而如果你的目的是有条件地跳过循环的执行，那么可以将 `v-if` 置于外层元素 (或 [`](https://cn.vuejs.org/v2/guide/conditional.html#在-lt-template-gt-中配合-v-if-条件渲染一整组)) 上。如：
+
+```html
+<ul v-if="todos.length">
+  <li v-for="todo in todos">
+    {{ todo }}
+  </li>
+</ul>
+<p v-else>No todos left!</p>
+```
+
+## v-for key的作用
+
+当 Vue 正在更新使用 `v-for` 渲染的元素列表时，它默认使用“就地更新”的策略。如果数据项的顺序被改变，Vue 将不会移动 DOM 元素来匹配数据项的顺序，而是就地更新每个元素，并且确保它们在每个索引位置正确渲染。这个类似 Vue 1.x 的 `track-by="$index"`。
+
+这个默认的模式是高效的，但是**只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出**。
+
+为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 `key` attribute：
+
+```
+<div v-for="item in items" v-bind:key="item.id">
+  <!-- 内容 -->
+</div>
+```
+
+建议尽可能在使用 `v-for` 时提供 `key` attribute，除非遍历输出的 DOM 内容非常简单，或者是刻意依赖默认行为以获取性能上的提升。
+
+因为它是 Vue 识别节点的一个通用机制，`key` 并不仅与 `v-for` 特别关联。后面我们将在指南中看到，它还具有其它用途。
+
+不要使用对象或数组之类的非基本类型值作为 `v-for` 的 `key`。请用字符串或数值类型的值。
 
 ## nextTick()
 

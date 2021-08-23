@@ -19,6 +19,38 @@
 - 方便其他设备解析，如盲人阅读器根据语义渲染网页
 - 有利于开发和维护，语义化更具可读性，代码更好维护，与CSS3关系更和谐。
 
+## 盒子模型
+
+盒子模型，英文即box model。无论是div、span、还是a都是盒子。
+
+但是，图片、表单元素一律看作是文本，它们并不是盒子。这个很好理解，比如说，一张图片里并不能放东西，它自己就是自己的内容
+
+### 盒子中的区域
+
+一个盒子中主要的属性就5个：width、height、padding、border、margin。如下：
+
+- width和height：**内容**的宽度、高度（不是盒子的宽度、高度）。
+- padding：内边距。
+- border：边框。
+- margin：外边距。
+
+### 标准盒模型和IE盒模型
+
+#### 标准盒模型
+
+标准W3C盒模型的方位包括：margin,border,padding,content,**content部分不包含其他部分**
+
+#### IE盒子模型
+
+IE盒子模型范围包括;margin,border,padding,content,和标准盒子模型不同的是：**IE盒子模型的content部分包含border和padding**
+
+#### CSS盒模型和IE盒模型的区别：
+
+- 在 **标准盒子模型**中，**width 和 height 指的是内容区域**的宽度和高度。增加内边距、边框和外边距不会影响内容区域的尺寸，但是会增加元素框的总尺寸。
+- **IE盒子模型**中，**width 和 height 指的是内容区域+border+padding**的宽度和高度。
+
+
+
 ## 表现与数据分离
 
 第一种是前端与后台分离，所有数据都是通过请求（AJAX）从后台获取，前端处理数据展现页面，不需要后台在页面中插入变量。
@@ -182,32 +214,414 @@ geolacation定位用户位置信息
 css选择器
 
 1. 标签选择器（如：body,div,p,ul,li）
-
 2. id选择器（如：id="name",id="name_txt"）
-
 3. 类选择器（如：class="name",class="name_txt"）
 4. 属性选择器（[title='mytitle']）
-
-4. 后代选择器（如：#head .nav ul li 从父集到子孙集的选择器）
-
-5. 子元素选择器（如：div>p ,带大于号>）
-
-6. 伪类选择器（如：就是链接样式,a元素的伪类，4种不同的状态：link、visited、active、hover。）
-7. 伪元素选择器 （::fater,::before）
+5. 后代选择器（如：#head .nav ul li 从父集到子孙集的选择器）
+6. 兄弟选择器（元素 + / 元素~）
+7. 子元素选择器（如：div>p ,带大于号>）
+8. 伪类选择器（如：就是链接样式,a元素的伪类，4种不同的状态：link、visited、active、hover。）
+9. 伪元素选择器 （::fater,::before）
+10. 否定选择器（父元素 :not(span))
 
 选择器权重
 
-1. id选择器（#myid）
+* 行内样式（1000）> ID选择器（100）>类，属性选择器和伪类选择器（10）> 元素选择器和伪元素选择器（1）>通配符选择器（0）
 
-2. 类选择器（.myclassname）
+### 边框圆角
 
-3. 标签选择器（div,h1,p）
+Border-radius  
 
-4. 子选择器（ul < li）
+### 盒阴影
 
-5. 后代选择器（li a）
+Box-shadow  
 
-6. 伪类选择（a:hover,li:nth-child）
+### 背景
+
+background-cilp：指定背景的绘制区域
+
+background-origin：设置背景图像的原始起始位置  
+
+background-size：指定背景图像的大小
+
+background-image: url('1.jpg),url('2.jpg') ... 使用逗号把图片分开
+
+### 渐变
+
+#### 线性渐变
+
+background-image：是沿着一根轴线改变颜色，从起点到终点进行顺序渐变
+
+**方向**
+
+background-image:linear-gradient(方向，开始颜色，结束颜色)
+
+1) 从上到下（默认）：background: linear-gradient(red,blue);
+
+2) 从左到右：background: linear-gradient(to right,red,blue);
+
+3) 对角：background: linear-gradient(to right bottom,red,blue);
+
+**颜色节点**
+
+1) background: linear-gradient(red 10%,blue 20%,green 30%,yellow 40%);
+
+从0%到10%，为红色，从10%到20%为红色到蓝色的渐变，从20%到30%为蓝色到绿色的渐变，从30%到40%，为绿色到黄色的渐变
+
+2) background: linear-gradient(red 50%,blue);
+
+  从0%到50%，为红色，从50%到100%为红色到蓝色的渐变，最后如果不写具体数值，默认到100%
+
+3) background: linear-gradient(red,blue 30%);
+
+从0%到30%，为红色到蓝色的渐变，如果第一个不写，默认数值是 0%
+
+4) background: linear-gradient(rgba(255,0,0,0),rgba(255,0,0,1));
+
+ 由透明色变为不透明色
+
+**重复渐变**
+
+background: repeating-linear-gradient(90deg,red 0%,blue 20%);
+
+或者 
+
+background: repeating-linear-gradient(90deg,red 0%,blue 10%,red 20%);
+
+#### 径向渐变
+
+background-image：从起点到终点，颜色从内向外进行圆形渐变
+
+background:radial-gradient(形状尺寸，开始颜色，结束颜色)
+
+**形状分类**
+
+1) 圆形circle
+
+2) 椭圆形ellipse 
+
+3) 注意：当元素的高和宽一样时，参数无论设置谁，都是圆形
+
+**颜色节点**
+
+background: radial-gradient(circle,red 30% ,blue 70%);
+
+注意：此时的百分比,指的是圆心到元素最远端的距离（角度）
+
+**尺寸**
+
+1) closest-side最近边 
+
+background: radial-gradient(closest-side circle,red , blue);
+
+2) farthest-side 最远边
+
+background: radial-gradient(farthest-side circle,red , blue);
+
+3) closest-corner最近角
+
+background: radial-gradient(closest-corner circle,red , blue);
+
+4) farthest-corner最远角
+
+background: radial-gradient(farthest-corner circle,red , blue);
+
+**重复渐变**
+
+background: repeating-radial-gradient(red 0%,blue 20%);
+
+background: repeating-radial-gradient(red 0%,blue 10%,red 20%);
+
+### 过度
+
+* transition-property  设置对象中的参与过渡的属性  
+
+​         语法：transition-property：none | all | property  
+
+* transition-duration  设置对象过渡的持续时间  
+
+​         语法：transition-duration：time  
+
+* transition-timing-function   设置对象中过渡的动画类型  
+
+​         语法：transition-timing-function：动画类型（只能使用一种）  
+
+​		参数说明：
+
+​		linear:线性过渡（匀速）cubic-bezier(0,0,1,1)
+
+​		ease:平滑过渡（慢--快--慢），默认值 cubic-bezier(0.25,0.1,0.25,1)
+
+​		ease-in:慢--快 cubic-bezier(0.42,0,1,1)
+
+​		ease-out:快--慢 cubic-bezier(0,0,0.58,1)
+
+​		ease-in-out:慢--快--慢 cubic-bezier(0.42,0,0.58,1)
+
+贝塞尔曲线
+
+* transition-delay 设置对象延迟的过渡时间  
+
+​         语法：transition-delay：time  
+
+* transitiion  设置对象变换时的过渡  
+
+​         语法：transition：property duration timing-function delay；  
+
+​		参数说明：
+
+​		时间顺序不能乱，其他参数位置不限
+
+​		如果想给多个属性添加不同的过度，参数之间使用逗号分开
+
+### 变换
+
+#### 2D变换
+
+1. 旋转
+
+​         语法：transform：rotate(angle) 单位deg  
+
+​         注意：angle指旋转角度，正数表示顺时针旋转，负数表示逆时针旋转  
+
+2. 平移
+
+   语法：
+
+   transform：translateX() --- 仅水平方向移动
+
+   transform：translateY() --- 仅垂直方向移动
+
+   transform：translate( X, Y) --- 水平方向和垂直方向同时移动
+
+   单位px
+
+   注意：如果只写一个参数，第二个默认是0，也就是只设置了水平方向上的位移
+
+3. 缩放
+
+   语法：
+
+   transform：scaleX() --- 仅水平方向缩放
+
+   transform：scaleY() --- 仅垂直方向缩放
+
+   transform：scale(x,y) --- 使元素垂直和水平方向同时缩放
+
+   没有单位
+
+   注意：如果只写一个参数，元素垂直和水平方向同时缩放
+
+4. 扭曲/倾斜
+
+   语法：
+
+   transform：skewX() --- 仅使元素在水平方向上扭曲变形
+
+   transform：skewY() --- 仅使元素在垂直方向上扭曲变形
+
+   transform：skew(x,y) --- 使元素在水平方向和垂直方向上扭曲变形
+
+   单位deg
+
+   注意：0deg与180deg 效果一样
+
+5. 变换基点
+
+   语法：
+
+   transform-origin：水平方向 垂直方向  
+
+   默认值：
+
+   rotate  几何中心点
+
+   skew 几何中心点
+
+   scale 几何中心点
+
+   translate 本身位置
+
+#### 3D变换
+
+1. 开启3D空间
+
+   transform-style: preserve-3d（一般对父元素设置）
+
+2. 3D变换设置
+
+   rotateX()：指对象在X轴上的旋转角度（变换基点： 50% 50% 0）
+
+   rotateY()：指对象在Y轴上的旋转角度（变换基点： 50% 50% 0）
+
+   rotateZ()：指对象在Z轴上的旋转角度（变换基点： 50% 50% 0）
+
+   translateZ()：指对象在Z轴上面的平移（变换基点： 50% 50% 0）
+
+   scaleZ():指对象在Z轴上面的缩放（变换基点： 50% 50% 0）
+
+3. 景深设置
+
+   设置：
+
+   父元素设置景深：perspective: 300px;
+
+   子元素设置景深：transform:perspective(300px) translateZ(-200px);
+
+4. 变换基点
+
+   语法使用：可以使用关键字（top,bottom,left,right）,百分比，具体像素值等  
+
+5. 景深中心点
+
+   语法使用：
+
+   perspective-origin: top right;
+
+6. 元素背面是否可见
+
+   backface-visibility:visible ;（默认值：可见）
+
+   backface-visibility: hidden; 不可见
+
+### 动画
+
+语法：keyframes关键帧，用来决定动画变化的关键位置  
+
+@keyframes animationname{
+
+​         keyframes-selector{
+
+​           cssStyles;
+
+​                }
+
+  }
+
+参数说明：
+
+animationname：必写项，定义动画的名称
+
+keyframes-selector：必写项，动画持续时间的百分比
+
+0% - 100%之间， 或者使用from和to关键字也可以设置，from代表0%，to代表100%
+
+1. animation-name  设置对象所应用的动画名称  
+
+   语法：animation-name：keyframename | none 
+
+   参数说明：
+
+   keyframename：指定要绑定到选择器的关键帧的名称 
+
+2. animation-duration  设置对象动画的持续时间  
+
+​         语法：animation-duration：time
+
+​		参数说明：
+
+​		指定对象播放完成需要花费的时间，默认值是0
+
+3. animation-timing-function  设置对象动画的过渡类型  
+
+   参数说明：
+
+   linear:线性过渡（匀速）
+
+   ease:平滑过渡（0--慢--快--慢），默认值
+
+   ease-in:慢--快
+
+   ease-out:快--慢
+
+   ease-in-out:慢--快--慢
+
+   贝塞尔曲线
+
+   Steps():运动按步数进行
+
+4. animation-delay  设置对象动画的延迟时间  
+
+​         语法：animation-delay：time  
+
+​		参数说明：
+
+​		可选值，定义动画开始前等待的时间，以秒或者毫秒数计数，默认值是0
+
+5.  animation-iteration-count   设置对象动画的循环次数  
+
+​         语法：animation-iteration-count ： infinite | number  
+
+​		参数说明：
+
+​		number为数字，其默认值是1
+
+​		infinite：无限循环次数
+
+6. animation-direction   设置对象动画是否反向运动  
+
+   语法：
+
+   animation-direction：normal , reverse , alternate , alternate-reverse
+
+   参数说明：
+
+   Normal:正常方向
+
+   reverse :反向运动
+
+   Alternate:先正常运动在反向运动，并持续交替运行， 需要配合循环属性使用
+
+   alternate-reverse:先反向运动在正常运动，并持续交替运行， 需要配合循环属性使用
+
+7. animation-play-state   设置对象是否正在运行或已暂停  
+
+​         语法：animation-play-state：paused | running  
+
+​		参数说明：
+
+​		paused ： 指定暂停动画
+
+​		running : 默认值，制定正在运行的动画
+
+8. animation-fill-mode  设置对象动画外的状态  
+
+​         语法：animation-fill-mode：backwards | both | forwards  
+
+​		参数说明：
+
+​		backwards ： 让元素一开始与 form 状态保持一致
+
+​		both : 让元素一开始与 from 状态保持一致,结束时候与to状态保持一致
+
+​		forwards: 结束时候与to状态保持一致
+
+9. animation  设置对象所应用的动画特效  
+
+   语法：
+
+   animation ： name duration timing-function delay iteration-count direction play-state  
+
+   ```css
+   /* 动画代码 */
+   @keyframes example {
+     0%   {background-color:red; left:0px; top:0px;}
+     25%  {background-color:yellow; left:200px; top:0px;}
+     50%  {background-color:blue; left:200px; top:200px;}
+     75%  {background-color:green; left:0px; top:200px;}
+     100% {background-color:red; left:0px; top:0px;}
+   }
+   
+   /* 应用动画的元素 */
+   div {
+     width: 100px;
+     height: 100px;
+     position: relative;
+     background-color: red;
+     animation-name: example;
+     animation-duration: 4s;
+   }
+   ```
 
 
 

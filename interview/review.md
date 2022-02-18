@@ -5,7 +5,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-08-19 16:26:57
+ * @LastEditTime: 2022-02-18 16:07:27
 -->
 
 # html
@@ -2065,3 +2065,569 @@ GET**可以带request body，但不能保证一定能被接收到**。如果你�
 *  404 (Not Found/未找到)  找不到系统资源
 *  500 (Internal Server Error/内部服务器错误)  服务器读取信息之中出错
 *  503 (Service Unavailable/服务无法获得) 表示服务器由于在维护或已经超载而无法响应
+
+# [数据结构与算法](https://blog.csdn.net/ityqing/article/details/82838524)
+
+最常用的数据结构与算法:
+
+- 数据结构：**数组、链表、栈、队列、散列表、二叉树、堆、跳表、图、Tire树**
+- 算法： **递归、排序、二分查找、搜索、哈希算法、贪心算法、分治算法、回溯算法、动态规划、字符串匹配算法**
+
+## 1. 算法复杂度
+
+### 1.1 大O复杂度表示法
+
+公式： **T(n) = O(f(n))**
+
+T(n)表示代码执行的时间; n表示数据规模的大小; f(n) 表示每行代码执行的次数总和。因为这是一个公式， 所以用f(n)来表示。公式中的O,表示代码的执行时间T(n)与f(n)表达式成正比 
+
+### 1.2 复杂度量级
+
+- 常数阶O(1)
+- 线性阶O(n)
+- 平方阶O(n²)
+- 对数阶O(logn)
+- 线性对数阶O(nlogn)
+
+**多项式阶**：随着数据规模的增长，算法的执行时间和空间占用，按照多项式的比例增长。包括，
+O(1)（常数阶）、O(logn)（对数阶）、O(n)（线性阶）、O(nlogn)（线性对数阶）、O(n^2)（平方阶）、O(n^3)（立方阶）
+**非多项式阶**：随着数据规模的增长，算法的执行时间和空间占用暴增，这类算法性能极差。包括，
+O(2^n)（指数阶）、O(n!)（阶乘阶）
+
+### 1.3 复杂度分析法则
+
+1）单段代码看高频：比如循环。
+2）多段代码取最大：比如一段代码中有单循环和多重循环，那么取多重循环的复杂度。
+3）嵌套代码求乘积：比如递归、多重循环等
+4）多个规模求加法：比如方法有两个参数控制两个循环的次数，那么这时就取二者复杂度相加 
+
+### 1.4 空间复杂度
+
+表示算法的存储空间与数据规模之间的增长关系 
+
+```js
+void print(int n) {
+    inti=0;
+    int[] a = new int[n];
+    for (i; i <n; ++i) {
+        a[i] =i* i;
+    }
+    for(i=n-1;i>=0;--i){
+        print out a[i]
+    }
+}
+```
+
+跟时间复杂度分析一样，我们可以看到，第2行代码中，我们申请了一个空间存储变量i,但是它是常最阶的，跟数据规模n没有关系，所以我们可以忽略。第3行申请了一个大小为n的int类型数组，除此之外，剩下的代码都没有占用更多的空间，所以整段代码的空间复杂度就是O(n) 
+
+我们常见的空间复杂度就是O(1)、O(n)、 O(n2), 像O(logn)、O(nlogn) 这样的对数阶复杂度平时都用不到。而且，空间复杂度分析比时间复杂度分析要简单很多。所以，对于空间复杂度，掌握刚我说的这些内容已经足够了
+
+## 2. 常见的数据结构
+
+数据结构研究的内容：就是如何按一定的逻辑结构，把数据组织起来，并选择适当的存储表示方法把逻辑结构组织好的数据存储到计算机的存储器里
+
+- **栈（Stack）：**栈是一种特殊的线性表，它只能在一个表的一个固定端进行数据结点的插入和删除操作。
+- **队列（Queue）：**队列和栈类似，也是一种特殊的线性表。和栈不同的是，队列只允许在表的一端进行插入操作，而在另一端进行删除操作。
+- **数组（Array）：**数组是一种聚合数据类型，它是将具有相同类型的若干变量有序地组织在一起的集合。
+- **链表（Linked List）：**链表是一种数据元素按照链式存储结构进行存储的数据结构，这种存储结构具有在物理上存在非连续的特点。
+- **树（Tree）：**树是典型的非线性结构，它是包括，2 个结点的有穷集合 K。
+- **图（Graph）：**图是另一种非线性数据结构。在图结构中，数据结点一般称为顶点，而边是顶点的有序偶对。
+- **堆（Heap）：**堆是一种特殊的树形数据结构，一般讨论的堆都是二叉堆。
+- **散列表（Hash table）：**散列表源自于散列函数(Hash function)，其思想是如果在结构中存在关键字和T相等的记录，那么必定在F(T)的存储位置可以找到该记录，这样就可以不用进行比较操作而直接取得所查记录。
+
+### 2.1 数组
+
+线性表:  线性表就是数据排成像一条线一样的结构.每个现行表上的数据最多只有前和后两个方向.常见的线性表结构：数组，链表、队列、栈等 
+
+1.  数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据。
+2.  连续的内存空间和相同类型的数据(随机访问的前提)
+3. 优点：两限制使得具有随机访问的特性缺点：删除，插入数据效率低
+
+### 2.2 链表
+
+1. 和数组一样，链表也是一种线性表。
+2. 从内存结构来看，链表的内存结构是不连续的内存空间，是将一组零散的内存块串联起来，从而进行数据存储的数据结构。
+3. 链表中的每一个内存块被称为节点Node。节点除了存储数据外，还需记录链上下一个节点的地址，即后继指针next 
+
+链表特点：
+
+1.  插入、删除数据效率高O(1)级别（只需更改指针指向即可），随机访问效率低O(n)级别（需要从链头至链尾进行遍历） 
+2.  和数组相比，内存空间消耗更大，因为每个存储数据的节点都需要额外的空间存储后继指针 
+
+**常用链表**
+
+1. 单链表：
+
+   1）每个节点只包含一个指针，即后继指针。
+   2）单链表有两个特殊的节点，即首节点和尾节点。为什么特殊？用首节点地址表示整条链表，尾节点的后继指针指向空地址null。
+   3）性能特点：插入和删除节点的时间复杂度为O（1），查找的时间复杂度为O(n)。 
+
+2. 循环列表：
+
+   1）除了尾节点的后继指针指向首节点的地址外均与单链表一致。
+   2）适用于存储有循环特点的数据，比如约瑟夫问题。 
+
+3. 双向链表：
+
+   1）节点除了存储数据外，还有两个指针分别指向前一个节点地址（前驱指针prev）和下一个节点地址（后继指针next）。
+   2）首节点的前驱指针prev和尾节点的后继指针均指向空地址。 
+
+   3）性能特点：
+   和单链表相比，存储相同的数据，需要消耗更多的存储空间。
+   插入、删除操作比单链表效率更高O(1)级别。以删除操作为例，删除操作分为2种情况：给定数据值删除对应节点和给定节点地址删除节点。对于前一种情况，单链表和双向链表都需要从头到尾进行遍历从而找到对应节点进行删除，时间复杂度为O(n)。对于第二种情况，要进行删除操作必须找到前驱节点，单链表需要从头到尾进行遍历直到p->next = q，时间复杂度为O(n)，而双向链表可以直接找到前驱节点，时间复杂度为O(1)
+
+   [选择数组还是列表](https://blog.csdn.net/ityqing/article/details/82838524)
+
+### 2.3 栈
+
+**数据结构栈：**栈的特点是先进后出，只有push和pop两个函数可以操作栈，分别进行压栈和弹栈，还有top函数查看栈顶元素。栈的一个典型应用是做开闭符号的处理，如构建DOM 
+
+**内存栈：** 函数执行的时候会把局部变量压到一个栈里面
+
+### 2.4 堆
+
+数据结构里的堆通常是指用数组表示的二叉树，如大堆排序和小堆排序。内存里的堆是指存放new出来动态创建变量的地方，和栈相对。
+
+### 2.5 队列
+
+队列是一种受限的线性表数据结构, 最基本的操作也是两个:入队enqueue(),放一个数据到队列尾部;出队dequeue(),从队列头部取一个元素。 
+
+特点:
+
+1.  队列跟栈一样,也是一种抽象的数据结构。
+
+2. 具有先进先出的特性,支持在队尾插入元素,在队头删除元素。
+
+实现: 队列可以用数组来实现,也可以用链表来实现
+
+## 3. [常用算法](https://www.cnblogs.com/onepixel/articles/7674659.html)
+
+算法研究的目的是为了更有效的处理数据，提高数据运算效率。数据的运算是定义在数据的逻辑结构上，但运算的具体实现要在存储结构上进行。一般有以下几种常用运算：
+
+- **检索：**检索就是在数据结构里查找满足一定条件的节点。一般是给定一个某字段的值，找具有该字段值的节点。
+- **插入：**往数据结构中增加新的节点。
+- **删除：**把指定的结点从数据结构中去掉。
+- **更新：**改变指定节点的一个或多个字段的值。
+- **排序：**把节点按某种指定的顺序重新排列。例如递增或递减
+
+### 3.1 冒泡排序(Bubble Sort)
+
+冒泡排序只会操作相邻的两个数据。每次冒泡操作都会对相邻的两个元素进行比较，看是否满足大小关系要求，如果不满足就让它俩互换。 
+
+```java
+public int[] bubbleSort(int[] a) {
+  int n = a.length;
+  if (n<=1) {
+    return a;
+  }
+  for (int i = 0; i < n; i++) {
+    //提前退出冒泡循环的标志
+    boolean flag = false;
+    for (int j = 0; j < n-i-1; j++) {
+      if (a[j]>a[j+1]) {
+        int temp = a[j];
+        a[j] = a[j+1];
+        a[j+1] = temp;
+
+        flag = true;//表示有数据交换
+      }
+      if (!flag) {
+        break; //没有数据交换(说明已排好序无需再进行冒泡),提前退出
+      }
+    }
+  }
+  return a;
+}
+```
+
+```js
+function bubbleSort(arr) {
+  var len = arr.length;
+  for (var i = 0; i < len - 1; i++) {
+      for (var j = 0; j < len - 1 - i; j++) {
+          if (arr[j] > arr[j+1]) {// 相邻元素两两对比
+              var temp = arr[j+1];// 元素交换
+              arr[j+1] = arr[j];
+              arr[j] = temp;
+          }
+      }
+  }
+  return arr;
+}
+```
+
+### 3.2 插入排序(Insertion Sort)
+
+插入排序将数组数据分成已排序区间和未排序区间。初始已排序区间只有一个元素，即数组第一个元素。在未排序区间取出一个元素插入到已排序区间的合适位置，直到未排序区间为空。 
+
+```java
+public int[] insertionSort(int[] a) {
+  int n = a.length;
+  if (n<=1) return a;
+  
+  for (int i = 1; i < n; i++) {
+    int value = a[i];
+    int j = i-1;
+    for (; j >=0; j--) {
+      if (a[j] > value) {
+        a[j+1] = a[j];//移动数据
+      }else {
+        break;
+      }
+    }
+    a[j+1] = value;//插入数据
+  }
+  
+  return a;
+}
+```
+
+```js
+function insertionSort(arr) {
+  var len = arr.length;
+  var preIndex, current;
+  for (var i = 1; i < len; i++) {
+      preIndex = i - 1;
+      current = arr[i];
+      while (preIndex >= 0 && arr[preIndex] > current) {
+        arr[preIndex + 1] = arr[preIndex];
+        preIndex--;
+      }
+      arr[preIndex + 1] = current;
+  }
+  return arr;
+}
+```
+
+```java
+for (int i = 1; i < insetArr.length; i++) {
+  for (int j = i; j > 0; j--) {
+    if (insetArr[j] < insetArr[j-1]) {
+      int temp;
+      temp = insetArr[j-1];
+      insetArr[j-1] = insetArr[j];
+      insetArr[j] = temp;
+    } else {
+      break;
+    }
+  }
+}
+```
+
+### 3.3 选择排序(Selection Sort)
+
+首先在未排序序列中找到最小（大）元素，存放到排序序列的起始位置，然后，再从剩余未排序元素中继续寻找最小（大）元素，然后放到已排序序列的末尾。以此类推，直到所有元素均排序完毕 
+
+```java
+public int[] selectionSort(int[] a) {
+  int n = a.length;
+  
+  for (int i = 0; i < a.length - 1; i++) {
+    for (int j = i+1; j < a.length; j++) {
+      //交换
+      if (a[i] > a[j]) {
+        int temp = a[i];
+        a[i] = a[j];
+        a[j] = temp;
+      }
+    }
+  }
+  
+  return a;
+}
+```
+
+```js
+function selectionSort(arr) {
+  var len = arr.length;
+  var minIndex, temp;
+  for (var i = 0; i < len - 1; i++) {
+    minIndex = i;
+    for (var j = i + 1; j < len; j++) {
+      if (arr[j] < arr[minIndex]) {     // 寻找最小的数
+        minIndex = j;                 // 将最小数的索引保存
+      }
+    }
+    temp = arr[i];
+    arr[i] = arr[minIndex];
+    arr[minIndex] = temp;
+  }
+  return arr;
+} 
+```
+
+```java
+int[] selectArr = {2, 4, 9, 5, 1, 6, 3};
+
+for (int i = 0; i < selectArr.length - 1; i ++) {
+  int min = i;
+  for (int j = i + 1; j < selectArr.length; j++) {
+    if (selectArr[j] < selectArr[min]) {
+        min = j;
+    }
+  }
+  if (i != min) {
+    int temp = selectArr[min];
+    selectArr[min] = selectArr[i];
+    selectArr[i] = temp;
+  }
+}
+```
+
+### 3.4 希尔排序(Shell Sort)
+
+1959年Shell发明，第一个突破O(n2)的排序算法，是简单插入排序的改进版。它与插入排序的不同之处在于，它会优先比较距离较远的元素。希尔排序又叫**缩小增量排序**。 
+
+```js
+// 修改于 2019-03-06
+function shellSort(arr) {
+  var len = arr.length;
+  for (var gap = Math.floor(len / 2); gap > 0; gap = Math.floor(gap / 2)) {
+    // 注意：这里和动图演示的不一样，动图是分组执行，实际操作是多个分组交替执行
+    for (var i = gap; i < len; i++) {
+      var j = i;
+      var current = arr[i];
+      while (j - gap >= 0 && current < arr[j - gap]) {
+        arr[j] = arr[j - gap];
+        j = j - gap;
+      }
+      arr[j] = current;
+    }
+  }
+  return arr;
+}
+```
+
+### 3.5 归并排序(Merge Sort)
+
+归并排序是建立在归并操作上的一种有效的排序算法。该算法是采用分治法（Divide and Conquer）的一个非常典型的应用。将已有序的子序列合并，得到完全有序的序列；即先使每个子序列有序，再使子序列段间有序。若将两个有序表合并成一个有序表，称为2-路归并 
+
+```js
+function mergeSort(arr) {
+  var len = arr.length;
+  if (len < 2) {
+    return arr;
+  }
+  var middle = Math.floor(len / 2),
+    left = arr.slice(0, middle),
+    right = arr.slice(middle);
+  return merge(mergeSort(left), mergeSort(right));
+}
+ 
+function merge(left, right) {
+  var result = [];
+
+  while (left.length>0 && right.length>0) {
+    if (left[0] <= right[0]) {
+        result.push(left.shift());
+    } else {
+        result.push(right.shift());
+    }
+  }
+
+  while (left.length)
+    result.push(left.shift());
+
+  while (right.length)
+    result.push(right.shift());
+
+  return result;
+}
+```
+
+### 3.6 快速排序(Quick Sort)
+
+快速排序的基本思想：通过一趟排序将待排记录分隔成独立的两部分，其中一部分记录的关键字均比另一部分的关键字小，则可分别对这两部分记录继续进行排序，以达到整个序列有序 
+
+```js
+function quickSort(arr, left, right) {
+  var len = arr.length,
+    partitionIndex,
+    left = typeof left != 'number' ? 0 : left,
+    right = typeof right != 'number' ? len - 1 : right;
+
+  if (left < right) {
+    partitionIndex = partition(arr, left, right);
+    quickSort(arr, left, partitionIndex-1);
+    quickSort(arr, partitionIndex+1, right);
+  }
+  return arr;
+}
+ 
+function partition(arr, left ,right) {     // 分区操作
+  var pivot = left,                      // 设定基准值（pivot）
+    index = pivot + 1;
+  for (var i = index; i <= right; i++) {
+    if (arr[i] < arr[pivot]) {
+      swap(arr, i, index);
+      index++;
+    }       
+  }
+  swap(arr, pivot, index - 1);
+  return index-1;
+}
+ 
+function swap(arr, i, j) {
+  var temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+```
+
+### 3.7 堆排序(Heap Sort)
+
+堆排序（Heapsort）是指利用堆这种数据结构所设计的一种排序算法。堆积是一个近似完全二叉树的结构，并同时满足堆积的性质：即子结点的键值或索引总是小于（或者大于）它的父节点 
+
+```js
+var len;    // 因为声明的多个函数都需要数据长度，所以把len设置成为全局变量
+ 
+function buildMaxHeap(arr) {   // 建立大顶堆
+  len = arr.length;
+  for (var i = Math.floor(len/2); i >= 0; i--) {
+      heapify(arr, i);
+    }
+}
+ 
+function heapify(arr, i) {     // 堆调整
+  var left = 2 * i + 1,
+    right = 2 * i + 2,
+    largest = i;
+
+  if (left < len && arr[left] > arr[largest]) {
+    largest = left;
+  }
+
+  if (right < len && arr[right] > arr[largest]) {
+    largest = right;
+  }
+
+  if (largest != i) {
+    swap(arr, i, largest);
+    heapify(arr, largest);
+  }
+}
+ 
+function swap(arr, i, j) {
+  var temp = arr[i];
+  arr[i] = arr[j];
+  arr[j] = temp;
+}
+ 
+function heapSort(arr) {
+  buildMaxHeap(arr);
+
+  for (var i = arr.length - 1; i > 0; i--) {
+    swap(arr, 0, i);
+    len--;
+    heapify(arr, 0);
+  }
+  return arr;
+}
+```
+
+### 3.8 计数排序(Counting Sort)
+
+计数排序不是基于比较的排序算法，其核心在于将输入的数据值转化为键存储在额外开辟的数组空间中。 作为一种线性时间复杂度的排序，计数排序要求输入的数据必须是有确定范围的整数。 
+
+```js
+function countingSort(arr, maxValue) {
+  var bucket = new Array(maxValue + 1),
+  sortedIndex = 0;
+  arrLen = arr.length,
+  bucketLen = maxValue + 1;
+
+  for (var i = 0; i < arrLen; i++) {
+    if (!bucket[arr[i]]) {
+      bucket[arr[i]] = 0;
+    }
+    bucket[arr[i]]++;
+  }
+
+  for (var j = 0; j < bucketLen; j++) {
+    while(bucket[j] > 0) {
+      arr[sortedIndex++] = j;
+      bucket[j]--;
+    }
+  }
+
+  return arr;
+}
+```
+
+### 3.9 桶排序(Bucket Sort)
+
+桶排序是计数排序的升级版。它利用了函数的映射关系，高效与否的关键就在于这个映射函数的确定。桶排序 (Bucket sort)的工作的原理：假设输入数据服从均匀分布，将数据分到有限数量的桶里，每个桶再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排） 
+
+```js
+function bucketSort(arr, bucketSize) {
+  if (arr.length === 0) {
+    return arr;
+  }
+
+  var i;
+  var minValue = arr[0];
+  var maxValue = arr[0];
+  for (i = 1; i < arr.length; i++) {
+    if (arr[i] < minValue) {
+      minValue = arr[i];                // 输入数据的最小值
+    } else if (arr[i] > maxValue) {
+      maxValue = arr[i];                // 输入数据的最大值
+    }
+  }
+
+  // 桶的初始化
+  var DEFAULT_BUCKET_SIZE = 5;            // 设置桶的默认数量为5
+  bucketSize = bucketSize || DEFAULT_BUCKET_SIZE;
+  var bucketCount = Math.floor((maxValue - minValue) / bucketSize) + 1;  
+  var buckets = new Array(bucketCount);
+  for (i = 0; i < buckets.length; i++) {
+    buckets[i] = [];
+  }
+
+  // 利用映射函数将数据分配到各个桶中
+  for (i = 0; i < arr.length; i++) {
+    buckets[Math.floor((arr[i] - minValue) / bucketSize)].push(arr[i]);
+  }
+
+  arr.length = 0;
+  for (i = 0; i < buckets.length; i++) {
+    insertionSort(buckets[i]);                      // 对每个桶进行排序，这里使用了插入排序
+    for (var j = 0; j < buckets[i].length; j++) {
+      arr.push(buckets[i][j]);                     
+    }
+  }
+
+  return arr;
+}
+```
+
+### 3.10 基数排序(Radix Sort)
+
+基数排序是按照低位先排序，然后收集；再按照高位排序，然后再收集；依次类推，直到最高位。有时候有些属性是有优先级顺序的，先按低优先级排序，再按高优先级排序。最后的次序就是高优先级高的在前，高优先级相同的低优先级高的在前 
+
+```js
+var counter = [];
+function radixSort(arr, maxDigit) {
+  var mod = 10;
+  var dev = 1;
+  for (var i = 0; i < maxDigit; i++, dev *= 10, mod *= 10) {
+    for(var j = 0; j < arr.length; j++) {
+      var bucket = parseInt((arr[j] % mod) / dev);
+      if(counter[bucket]==null) {
+        counter[bucket] = [];
+      }
+      counter[bucket].push(arr[j]);
+    }
+    var pos = 0;
+    for(var j = 0; j < counter.length; j++) {
+      var value = null;
+      if(counter[j]!=null) {
+        while ((value = counter[j].shift()) != null) {
+          arr[pos++] = value;
+        }
+      }
+    }
+  }
+  return arr;
+}
+```

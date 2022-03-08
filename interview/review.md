@@ -5,7 +5,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-02-18 16:07:27
+ * @LastEditTime: 2022-02-24 11:17:13
 -->
 
 # html
@@ -1350,7 +1350,7 @@ history：用于浏览器的记录栈，go,back,forward,他提供对历史记录
 ## 跨域
 
 ### **什么是同源策略？**
-同源策略/SOP（Same origin policy）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSFR等攻击。所谓同源是指"协议+域名+端口"三者相同，**即便两个不同的域名指向同一个ip地址，也非同源**
+同源策略/SOP（Same origin policy）是一种约定，由Netscape公司1995年引入浏览器，它是浏览器最核心也最基本的安全功能，如果缺少了同源策略，浏览器很容易受到XSS、CSRF等攻击。所谓同源是指"协议+域名+端口"三者相同，**即便两个不同的域名指向同一个ip地址，也非同源**
 
 #### 同源策略限制内容有：
 
@@ -1643,32 +1643,32 @@ window.name属性的独特之处：name值在不同的页面（甚至不同域�
 其中a.html和b.html是同域的，都是`http://localhost:3000`;而c.html是`http://localhost:4000`
 
 ```js
- // a.html(http://localhost:3000/b.html)
-  <iframe src="http://localhost:4000/c.html" frameborder="0" onload="load()" id="iframe"></iframe>
-  <script>
-    let first = true
-    // onload事件会触发2次，第1次加载跨域页，并留存数据于window.name
-    function load() {
-      if(first){
-      // 第1次onload(跨域页)成功后，切换到同域代理页面
-        let iframe = document.getElementById('iframe');
-        iframe.src = 'http://localhost:3000/b.html';
-        first = false;
-      }else{
-      // 第2次onload(同域b.html页)成功后，读取同域window.name中数据
-        console.log(iframe.contentWindow.name);
-      }
+// a.html(http://localhost:3000/b.html)
+<iframe src="http://localhost:4000/c.html" frameborder="0" onload="load()" id="iframe"></iframe>
+<script>
+  let first = true
+  // onload事件会触发2次，第1次加载跨域页，并留存数据于window.name
+  function load() {
+    if(first){
+    // 第1次onload(跨域页)成功后，切换到同域代理页面
+      let iframe = document.getElementById('iframe');
+      iframe.src = 'http://localhost:3000/b.html';
+      first = false;
+    }else{
+    // 第2次onload(同域b.html页)成功后，读取同域window.name中数据
+      console.log(iframe.contentWindow.name);
     }
-  </script>
+  }
+</script>
 ```
 
 b.html为中间代理页，与a.html同域，内容为空。
 
 ```js
- // c.html(http://localhost:4000/c.html)
-  <script>
-    window.name = '我不爱你'  
-  </script>
+// c.html(http://localhost:4000/c.html)
+<script>
+  window.name = '我不爱你'  
+</script>
 ```
 
 总结：通过iframe的src属性由外域转向本地域，跨域数据即由iframe的window.name从外域传递到本地域。这个就巧妙地绕过了浏览器的跨域访问限制，但同时它又是安全操作。
@@ -1680,29 +1680,29 @@ b.html为中间代理页，与a.html同域，内容为空。
 具体实现步骤：一开始a.html给c.html传一个hash值，然后c.html收到hash值后，再把hash值传递给b.html，最后b.html将结果放到a.html的hash值中。 同样的，a.html和b.html是同域的，都是`http://localhost:3000`;而c.html是`http://localhost:4000`
 
 ```js
- // a.html
-  <iframe src="http://localhost:4000/c.html#iloveyou"></iframe>
-  <script>
-    window.onhashchange = function () { //检测hash的变化
-      console.log(location.hash);
-    }
-  </script>
+// a.html
+<iframe src="http://localhost:4000/c.html#iloveyou"></iframe>
+<script>
+  window.onhashchange = function () { //检测hash的变化
+    console.log(location.hash);
+  }
+</script>
 ```
 
 ```js
- // b.html
-  <script>
-    window.parent.parent.location.hash = location.hash 
-    //b.html将结果放到a.html的hash值中，b.html可通过parent.parent访问a.html页面
-  </script>
+// b.html
+<script>
+  window.parent.parent.location.hash = location.hash 
+  //b.html将结果放到a.html的hash值中，b.html可通过parent.parent访问a.html页面
+</script>
 ```
 
 ```js
 // c.html
- console.log(location.hash);
-  let iframe = document.createElement('iframe');
-  iframe.src = 'http://localhost:3000/b.html#idontloveyou';
-  document.body.appendChild(iframe);
+console.log(location.hash);
+let iframe = document.createElement('iframe');
+iframe.src = 'http://localhost:3000/b.html#idontloveyou';
+document.body.appendChild(iframe);
 ```
 
 #### 九. document.domain + iframe

@@ -6,6 +6,8 @@
 
 转换：toLocalString toString valueOf
 
+栈(改变原数组)：push pop
+
 队列(改变原数组)：shift unshift
 
 重排序 (改变原数组) ：sort reverse

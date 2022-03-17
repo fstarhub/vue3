@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2021-06-18 10:20:05
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-06-18 12:54:03
+ * @LastEditTime: 2022-03-17 09:54:35
 -->
 # vue3.0特点
 ## 1. vue3.0六大亮点
@@ -15,7 +15,7 @@
   > * Fragment Teleport(Protal), Sespense: 更先进的组件
   ***
   ---
- 
+
 ## 2. vue3.0是如何变快的
 * [diff方法优化](https://vue-next-template-explorer.netlify.app/)   
 
@@ -26,66 +26,66 @@
   > vue2中无论元素是否参与更新，每次都会重新创建   
   > vue3中对于不参与更新的元素，只会被创建一次，之后会在每次渲染时后被不停的复用   
   ```html
-    <div>
-      <p>Hello World!</p>
-      <p>Hello World!</p>
-      <p>Hello World!</p>
-      <p>{{msg}}</p>
-    </div>
-  ```  
+  <div>
+    <p>Hello World!</p>
+    <p>Hello World!</p>
+    <p>Hello World!</p>
+    <p>{{msg}}</p>
+  </div>
+  ```
   静态提升前
 
   ```js
-    export function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (_openBlock(), _createBlock("div", null, [
-        _createVNode("p", null, "Hello World!"),
-        _createVNode("p", null, "Hello World!"),
-        _createVNode("p", null, "Hello World!"),
-        _createVNode("p", null, _toDisplayString(_ctx.msg), 1 /* TEXT */)
-      ]))
-    }
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock("div", null, [
+      _createVNode("p", null, "Hello World!"),
+      _createVNode("p", null, "Hello World!"),
+      _createVNode("p", null, "Hello World!"),
+      _createVNode("p", null, _toDisplayString(_ctx.msg), 1 /* TEXT */)
+    ]))
+  }
   ```
   静态提升后
 
   ```js
-    const _hoisted_1 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
-    const _hoisted_2 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
-    const _hoisted_3 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
+  const _hoisted_1 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
+  const _hoisted_2 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
+  const _hoisted_3 = /*#__PURE__*/_createVNode("p", null, "Hello World!", -1 /* HOISTED */)
 
-    export function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (_openBlock(), _createBlock("div", null, [
-        _hoisted_1,
-        _hoisted_2,
-        _hoisted_3,
-        _createVNode("p", null, _toDisplayString(_ctx.msg), 1 /* TEXT */)
-      ]))
-    }
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock("div", null, [
+      _hoisted_1,
+      _hoisted_2,
+      _hoisted_3,
+      _createVNode("p", null, _toDisplayString(_ctx.msg), 1 /* TEXT */)
+    ]))
+  }
   ```
 + cacheHandlers 事件侦听器缓存
 
   > 默认情况下onClick会被视为动态绑定，所以每次都会去追踪它的变化，但是因为是同一个函数，所以没有追踪变化，直接缓存起来复用即可    
   ```html
-    <div>
-      <button @click="onClick"></button>
-    </div>
+  <div>
+    <button @click="onClick"></button>
+  </div>
   ```
   开启事件监听缓
-    ```js
-    export function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (_openBlock(), _createBlock("div", null, [
-        _createVNode("button", { onClick: _ctx.onClick }, null, 8 /* PROPS */, ["onClick"])
-      ]))
-    }
+  ```js
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock("div", null, [
+      _createVNode("button", { onClick: _ctx.onClick }, null, 8 /* PROPS */, ["onClick"])
+    ]))
+  }
   ```
   开启事件监听缓存后
-    ```js
-    export function render(_ctx, _cache, $props, $setup, $data, $options) {
-      return (_openBlock(), _createBlock("div", null, [
-        _createVNode("button", {
-          onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.onClick && _ctx.onClick(...args)))
-        })
-      ]))
-    }
+  ```js
+  export function render(_ctx, _cache, $props, $setup, $data, $options) {
+    return (_openBlock(), _createBlock("div", null, [
+      _createVNode("button", {
+        onClick: _cache[1] || (_cache[1] = (...args) => (_ctx.onClick && _ctx.onClick(...args)))
+      })
+    ]))
+  }
   ```
   \* 注意点： 开启事件监听缓存后，没有了静态标记，在vue3中diff算法中，只有有静态标记的才会进行比较，才会进行追踪
 
@@ -116,15 +116,51 @@
   `npm run dev`
 
   ## 3. vue3.0兼容vue2.x
-  ****
+****
   # 4. vue3.0 one piece API介绍
   ## 4.1 composition API(react hook)
     1. composition API(react hook)
-    setup：
+    setup：（介于于vue2中的beforeCreate和created之间）
 
   ## 4.2 custom renderer API
-    1. 
 
-  ## vue3 响应式数据本事
+
+### 4.3 常用函数
+
+1. ref：本质ref(xx) -> reactive({value: xx})，模板中直接使用ref生明的变量，复制，修改响应式数据不会影响以前的数据，数据发生改变，界面就会自动更新
+2. reactive：必须传递一个对象，使用时用.value获取其值
+3. isRef： 检查一个值是否为一个 ref 对象 
+4. isReactive： 检查一个对象是否是由 reactive 创建的响应式代理 
+5. shallowRef：本质shallowRef -> shallowReactive({value: 10})，通过shallowRef创建数据，那么vue监听的是.value的变化，并不是第一层的变化
+6. shallowReactive：通过shallowReactive创建的数据，vue会监听第一层的变化包装成proxy，修改第一层变化的数据，里层也会监听，如果不修改第一层，里层就不会被监听到
+7. towRow： 获取ref或者reactive的原始数据参数的（不会更新UI界面）
+8. markRaw: 锁定数据无法被追踪
+9. toRef：引用，修改响应式数据会影响以前的数据，数据发生改变，界面不会自动更新
+10. toRefs：修改传入对象中的多个属性变为响应式属性
+11. customRef：返回一个ref对象，可以显示的控制依赖追踪和触发响应
+12. readonly：用于创建一个只读的数据，并且是递归只读
+13. shallowReadonly：用于创建一个只读的数据，但是不是递归只读的
+
+### 4.4 生命周期
+
+1、beforeCreate -> 使用 setup()
+
+2、created -> 使用 setup()
+
+3、beforeMount -> onBeforeMount
+
+4、mounted -> onMounted
+
+5、beforeUpdate -> onBeforeUpdate
+
+6、updated -> onUpdated
+
+7、beforeDestroy -> onBeforeUnmount
+
+8、destroyed -> onUnmounted
+
+9、errorCaptured -> onErrorCaptured
+
+  ## vue3 响应式数据本质
     在vue2.x中是通过difineProperty来实现响应式数据的
     在vue3.x中是通过Proxy来实现响应式数据的

@@ -3,15 +3,15 @@
  * @Autor: fengshuai
  * @Date: 2021-06-18 10:20:05
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-03-17 09:54:35
+ * @LastEditTime: 2022-03-29 12:43:19
 -->
 # vue3.0特点
 ## 1. vue3.0六大亮点
   > * Performance: 性能比vue2.x快1.2~2倍   
-  > * Tree Shaking Support: 按需编译，体积比vue2.x更小   
-  > * Composition API: 组合API（类似React Hooks）   
-  > * Better TypeScript Support: 更好的Ts支持   
-  > * Custom Renderer API: 暴露了自定义渲染API   
+  > * Tree Shaking Support: 按需编译，体积比vue2.x更小
+  > * Composition API: 组合API（类似React Hooks）
+  > * Better TypeScript Support: 更好的Ts支持
+  > * Custom Renderer API: 暴露了自定义渲染API
   > * Fragment Teleport(Protal), Sespense: 更先进的组件
   ***
   ---

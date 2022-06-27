@@ -2,8 +2,8 @@
  * @Description: 
  * @Autor: fengshuai
  * @Date: 2021-06-19 12:17:48
- * @LastEditors: 冯帅
- * @LastEditTime: 2021-06-22 23:17:43
+ * @LastEditors: fengshuai
+ * @LastEditTime: 2022-03-15 20:36:54
 -->
 <template>
   <div class="demo">
@@ -59,7 +59,7 @@ export default {
    * 1.递归监听
    *  默认情况下，无论是通过ref还是reactive都是递归监听
    * 2.递归监听存在的问题
-   *  如果数据量将达，非常消耗性能
+   *  如果数据量较大，非常消耗性能
    * 
    */
   methods: {

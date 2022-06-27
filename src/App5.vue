@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2021-06-19 12:17:48
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-08-18 15:22:23
+ * @LastEditTime: 2022-03-15 20:39:23
 -->
 <template>
   <div class="demo">
@@ -27,8 +27,8 @@
    * 1.递归监听
    *  默认情况下，无论是通过ref还是reactive都是递归监听
    * 2.递归监听存在的问题
-   *  如果数据量将达，非常消耗性能
-   * 3.如何处罚非递归监听更新界面？
+   *  如果数据量较大，非常消耗性能
+   * 3.如何处理非递归监听更新界面？
    *  如果是shallowRef类型数据，可以通过triggerRef来触发
    * 4.应用场景
    *  一般情况下，我们使用ref 和reactive即可，只有在需要监听的数据量比较大的时候，我们才需要使用shallowRef和shallowReactive

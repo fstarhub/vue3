@@ -1,9 +1,9 @@
 <!--
- * @Description: 
+ * @Description: 只读属性
  * @Autor: fengshuai
  * @Date: 2021-06-19 12:17:48
  * @LastEditors: fengshuai
- * @LastEditTime: 2021-06-28 14:32:15
+ * @LastEditTime: 2022-03-15 20:55:16
 -->
 <template>
   <div class="demo">

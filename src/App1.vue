@@ -1,3 +1,10 @@
+<!--
+ * @Description: 
+ * @Autor: fengshuai
+ * @Date: 2021-06-18 19:31:42
+ * @LastEditors: fengshuai
+ * @LastEditTime: 2022-03-15 20:34:26
+-->
 <!--  -->
 <template>
   <div class="demo">
@@ -6,7 +13,7 @@
       如果在template中使用的时reactive类型中的数据，vue不会自动添加.value，
       vue时如何决定是否需要添加.value的？
       vue在解析数据之前，会自动判断这个属性是否时ref类型的
-      如果时就自动添加__v_ref来判断的，如果有这个私有属性，并且取值魏true，那么就道标是一个ref类型的数据
+      如果是就自动添加__v_ref来判断的，如果有这个私有属性，并且取值为true，那么就表示一个ref类型的数据
      -->
     <p>{{count}}</p>
     <button @click="clickFn">按钮</button>

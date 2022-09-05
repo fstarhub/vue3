@@ -8,7 +8,7 @@ module.exports = {
   },
   devServer: {
     // 静态文件目录
-    contentBase: path.join(__dirname, 'www'),
+    contentBase: path.join(__dirname, 'www'), // 静态文件指向www文件夹
     // 不压缩
     compress: false,
     // 端口号

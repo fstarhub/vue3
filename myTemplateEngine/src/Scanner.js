@@ -24,12 +24,12 @@ export default class Scanner {
     // 记录pos的值
     const pos_backUp = this.pos
     // 尾巴开头不是stopTag时，说明没扫描到stopTag
-    while(this.tail.indexOf(stopTag) != 0 && this.eos()) {
+    while(this.tail.indexOf(stopTag) != 0 && this.eos()) { // indexOf() 第一次出现指定值的索引
       this.pos++
-      this.tail = this.templateStr.substr(this.pos)
+      this.tail = this.templateStr.substr(this.pos) // subsrt(star, [length])
     }
 
-    return this.templateStr.substring(pos_backUp, this.pos)
+    return this.templateStr.substring(pos_backUp, this.pos) // substring(indexStart, indexEnd)
   }
 
   // 指针是否已经到头

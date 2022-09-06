@@ -1,7 +1,7 @@
 // Scanner类
 export default class Scanner {
   constructor(templateStr) {
-    console.log('我是Scanner', templateStr);
+    // console.log('我是Scanner', templateStr);
 
     this.templateStr = templateStr
     // 指针

@@ -13,10 +13,40 @@
   <script src="/xuni/bundle.js"></script>
 
   <script>
-    var templateStr = `我买了一个{{thing}}，好{{mood}}啊`
+    // var templateStr = `我买了一个{{thing}}，好{{mood}}啊`
+    var templateStr = `
+      <div>
+        <ul>
+            {{#students}}
+            <li>
+                学生{{item.name}}的爱好是
+                <ol>
+                    {{#item.hobbies}}
+                    <li>{{.}}</li>
+                    {{/item.hobbies}}
+                </ol>
+            </li>
+            {{/students}}
+        </ul>
+      </div>
+    `
+    // var templateStr = `我爱{{somebody}}，{{somebody}}也爱我`
+    // var data = {
+    //   somebody: '北京'
+    // }
+
+    // var data = {
+    //   thing: '苹果手机',
+    //   mood: '开心'
+    // }
+    
+    // 数据
     var data = {
-      thing: '苹果手机',
-      mood: '开心'
+      students: [
+        {'name': '小明', 'hobbies': ['游泳', '打球']},
+        {'name': '小强', 'hobbies': ['羽毛球', '篮球']},
+        {'name': '小红', 'hobbies': ['下棋', '睡觉', '打游戏']}
+      ]
     }
 
     SSG_templaterEngine.render(templateStr, data)

@@ -1,4 +1,5 @@
 import Scanner from "./Scanner";
+import nestTokens from "./nestTokens";
 
 // 将模板字符串变为tokens数组
 export default function parseTemplateToTokens(template) {
@@ -26,10 +27,11 @@ export default function parseTemplateToTokens(template) {
       } else if (words[0] == '/') {
         tokens.push(['/', words.substring(1)])
       } else {
-        tokens.push(['text', words])
+        tokens.push(['name', words])
       }
     }
     scanner.scan('}}')
   }
-  return tokens
+  // 返回折叠的tokens
+  return nestTokens(tokens)
 }

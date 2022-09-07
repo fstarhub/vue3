@@ -12,6 +12,28 @@ export default function parseTemplateToTokens(template) {
     // 收集开始标记之前出现的文字
     words = scanner.scanUtil('{{')
     if (words != '') {
+      // 尝试去空格，判断普通文本的空格，还是标签中的空格
+      // 标签中的空格不去掉，如<div class="box">
+      let isInJJH = false
+      // 空白字符串
+      var _words = ''
+      for(let i = 0; i < words.length; i++) {
+        // 判断空格是否在标签里
+        if (words[i] == '<') {
+          isInJJH = true
+        } else if (words[i] == '>') {
+          isInJJH = false
+        }
+        // 如果这项不是空格，拼接上
+        if (/\s/.test(words[i])) {
+          _words += words[i]
+        } else {
+          if (isInJJH) {
+            // 如果这项是空格，只有它在标签内的时候，拼接上
+            _words += ''
+          }
+        }
+      }
       // 存起来
       tokens.push(['text', words])
     }

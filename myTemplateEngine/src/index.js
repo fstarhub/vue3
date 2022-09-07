@@ -1,7 +1,7 @@
 // import Scanner from './Scanner'
 import parseTemplateToTokens from './parseTemplateToTokens'
 import renderTemplate from './renderTemplate'
-import lookup from './lookup'
+// import lookup from './lookup'
 
 // 提供全局SSG_templaterEngine对象
 window.SSG_templaterEngine = {
@@ -35,6 +35,8 @@ window.SSG_templaterEngine = {
     //     }
     //   }
     // }, 'm.n.p')
+
+    return domStr
     
   }
 

@@ -11,8 +11,8 @@ lookup{dataObj, a.b.c}结果就是123
 */
 export default function lookup(dataObj, keyName) {
   // console.log(dataObj, keyName)
-  // 首先看keyName中有没有点符号
-  if (keyName.indexOf('.') != -1) {
+  // 首先看keyName中有没有点符号，但不能是.本身
+  if (keyName.indexOf('.') != -1 && keyName != '.') {
     var keys = keyName.split('.')
     // 设置临时变量，用于周转，一层层找下去
     var temp = dataObj

@@ -5,14 +5,14 @@
  * @LastEditors: fengshuai
  * @LastEditTime: 2022-06-28 09:58:24
 -->
-# vue源码
+# Vue源码之mustache模板引擎
 
 ## 历史上数据变为视图的方法
 
 1. 纯DOM法：非常笨拙，没有实用价值
 2. 数组join法：曾几何时非常流行，是曾经前端的必会知识
 3. ES6的反引导法：ES6中新增的`${a}`语法糖，很好用
-4. 模板引擎：解决数据变为视图的最优雅的方法
+4. 模板引擎：**解决数据变为视图的最优雅的方法**
 
 ## mustache模板引擎的使用
 
@@ -114,12 +114,16 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
 
 ### mustache机理
 
+![](src\assets\mustache机理.png)
+
 模板字符串(翻译)=>(tokens+数据)(解析)=>dom字符串
 
 > 1. 将模板字符串编译为tokens形式
 > 2. 将tokens结合数据，编译为dom字符串
 
 **模板字符串：**
+
+![](src\assets\template.png)
 
 `<h1>我买了一个{{thing}}，好{{mood}}啊</h1>`
 
@@ -133,6 +137,8 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
 ```
 
 **tokens：**
+
+![](src\assets\tokens.png)
 
 ```json
 [
@@ -177,9 +183,9 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
         <li>
             学生{{item.name}}的爱好是
             <ol>
-                {{#item.hobbies}}
+                {{#hobbies}}
                 <li>{{.}}</li>
-                {{/item.hobbies}}
+                {{/hobbies}}
             </ol>
         </li>
         {{/students}}
@@ -204,6 +210,50 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
 	["text", "</ul></div>"]
 ]
 ```
+
+### 手写实现mustache
+
+见 myTemplateEngine 文件夹
+
+# Vue源码之虚拟DOM和diff算法
+
+## 虚拟DOM
+
+![](src/assets/真实虚拟DOM.png)
+
+## diff发生在虚拟DOM上
+
+![](src/assets/diff.png)
+
+## h函数产生虚拟节点
+
+![](src/assets/h函数原理.png)
+
+## 一个虚拟节点有哪些属性
+
+```js
+{
+    children: undefined // 子元素
+    elm: undefined // 是否上树
+    data: {}
+    key: undefined // 节点得唯一标识
+    sel: 'div' // 对应得元素标签
+    text: '我是一个div盒子'
+    
+}
+```
+
+## diff算法
+
+![](src/assets/diff比较方式.png)
+
+
+
+# Vue源码之数据响应式原理
+
+# Vue源码之AST抽象语法树
+
+# Vue源码之指令和生命周期
 
 
 

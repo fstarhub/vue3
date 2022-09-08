@@ -30,10 +30,15 @@
   helloword   
   world is beaty   
   as a [fly](http://192.168.30.253:9527/),蓝色字体是连接
-  ****
+****
       这是一个短路哟' shibushisds 'asa
 
+## 图片
+
+![](src\assets\mustache机理.png)
+
 ## 单行代码
+
 `helloworld我是单行代码`   
 
 ## 多行代码

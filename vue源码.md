@@ -247,6 +247,10 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
 
 ![](src/assets/diff比较方式.png)
 
+![](src/assets/diff处理节点.png)
+
+![](src/assets/diff精细比较.png)
+
 
 
 # Vue源码之数据响应式原理

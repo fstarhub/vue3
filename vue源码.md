@@ -1,4 +1,5 @@
 <!--
+
  * @Description: vue源码学习笔记
  * @Autor: fengshuai
  * @Date: 2022-06-27 15:27:00
@@ -251,15 +252,199 @@ console.log(template1.replace(/\{\{\w+\}\}/g, function(a,b,c){
 
 ![](src/assets/diff精细比较.png)
 
+## diff算法优化策略
 
+![](src/assets/fourTypeSearch.png)
+
+1. 新增的情况
+
+![](src/assets/add.png)
+
+2. 删除的情况
+
+![](src/assets/delete.png)
+
+3. 多删除的情况
+
+![](src/assets/moreDelete.png)
+
+4. 复杂的情况
+
+![](src/assets/complex1.png)
+
+![](src/assets/complex2.png)
 
 # Vue源码之数据响应式原理
 
+## 原理
+
+![](src/assets/principle.png)
+
+## MVVM案例
+
+![](src/assets/MVVMexample.png)
+
+## 侵入式和非侵入式
+
+![](src/assets/dataChange.png)
+
+## Object.defineProperty()
+
+Object.defineProperty()方法会直接在一个对象上定义一个新属性，或者修改 
+
+一个对象的现有属性，并返回此对象。
+
+```js
+var obj = {}
+Object.defineProperty(obj, 'a', {
+    value: 3
+})
+Object.defineProperty(obj, 'b', {
+    value: 5
+})
+console.log(obj, obj.a, obj.b)
+```
+
+Object.defineProperty()方法可以设置一些额外隐藏的属性
+
+```js
+Object.defineProprety(obj, 'a', {
+    value: 3,
+    writable: false // 是否可写
+    enumerable: false // 是否可以被枚举
+})
+```
+
+## getter/setter
+
+get
+
+属性的 getter 函数，如果没有 getter，则为 `undefined`。当访问该属性时，会调用此函数。执行时不传入任何参数，但是会传入 `this` 对象（由于继承关系，这里的`this`并不一定是定义该属性的对象）。该函数的返回值会被用作属性的值。 **默认为 [`undefined`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined)**。
+
+set
+
+属性的 setter 函数，如果没有 setter，则为 `undefined`。当属性值被修改时，会调用此函数。该方法接受一个参数（也就是被赋予的新值），会传入赋值时的 `this` 对象。 **默认为 [`undefined`](https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/undefined)**。
+
+**小坑**： 用闭包存储get和set的值
+
+```js
+Object.defineProperty(obj, 'a', {
+    // getter
+    get() {
+        console.log('你试图访问obj的a属性')
+    }，
+    //setter
+    set() {
+    console.log('你试图改变obj的a属性')
+	}
+})
+console.log(obj.a)
+obj.a = 10
+```
+
+## defineReactive函数
+
+getter/setter需要变量周转才能工作
+
+```js
+var temp;
+Object.defineProperty(obj, 'a', {
+  // getter 
+  get() {
+    console.log('你试图访问obj的a属性'); 
+    return temp;
+  },
+  // setter 
+  set(newValue) {
+    console.log('你试图改变obj的a属性', newValue); 
+    temp = newValue; }
+});
+```
+
+使用defineReactive函数不需要设置临时变量，而是用闭包
+
+```js
+function defineReactive(data, key, val) {
+    Object.defineProperty(data, key, {
+        // 可枚举
+        enumerable: true,
+        // 可以被配置，比如可以被delete
+        configurable: true,
+        // getter
+        get() {
+            console.log('你试图访问obj的' + key + '属性')
+            return val
+        },
+        // setter
+        set(newValue) {
+            console.log('你试图改变obj的' + key + '属性', newValue)
+            if (val === newValue) {
+                return
+            }
+            val = newValue
+        }
+    })
+}
+```
+
+## 递归侦测对象全部属性
+
+![](src/assets/observe.png)
+
+## 数组响应式
+
+![](src/assets/shuzu.png)
+
+## 依赖收集
+
+什么是依赖
+
+* 需要用到数据的地方，称为依赖
+* Vue1.x   **细粒度**依赖，用到数据的**DOM**都是依赖
+* Vue2.x   **中等粒度**依赖，用到数据的**组件**都是依赖
+* 在getter中收集依赖，在setter中触发依赖
+
+dep类和watch类
+
+* 把依赖收集的代码封装成一个Dep类，它专门用来管理依赖，**每个Observer的实例，成员中都有一个Dep的实例**
+
+* Watcher是一个中介，数据发生变化时通过Watcher中转，通知组件
+
+  ![](src/assets/Dep.png)
+
+* 依赖就是Watcher。只有Watcher触发的getter才会收集依赖，哪个 Watcher触发了getter，就把哪个Watcher收集到Dep中。
+
+* Dep使用发布订阅模式，当数据发生变化时，会循环依赖列表，把所 有的Watcher都通知一遍
+
+* 代码实现的巧妙之处：Watcher把自己设置到全局的一个指定位置， 然后读取数据，因为读取了数据，所以会触发这个数据的getter。在 getter中就能得到当前正在读取数据的Watcher，并把这个Watcher   收集到Dep中。
+
+  ![](src/assets/yilaishouji.png)
+
 # Vue源码之AST抽象语法树
+
+## AST是什么
+
+![](src/assets/whatAST.png)
+
+![](src/assets/AST.png)
+
+## AST本质
+
+![](src/assets/essence.png)
+
+## AST与虚拟节点关系
+
+![](src/assets/ASTandNode.png)
+
+## 算法储备
+
+1. 指针思想
+2. 递归深入（一般用于规则复现）
+3. 栈思想
 
 # Vue源码之指令和生命周期
 
+## Vue核心组成
 
-
-
+![](src/assets/VueInside.png)
 

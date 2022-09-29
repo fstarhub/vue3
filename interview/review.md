@@ -1615,16 +1615,16 @@ server.listen(4000, () => {
 ```js
 // proxy服务器
 server {
-    listen       81;
-    server_name  www.domain1.com;
-    location / {
-        proxy_pass   http://www.domain2.com:8080;  #反向代理
-        proxy_cookie_domain www.domain2.com www.domain1.com; #修改cookie里域名
-        index  index.html index.htm;
+    listen: 81,
+    server_name: www.domain1.com,
+    location: {
+        proxy_pass: 'http://www.domain2.com:8080',  // 反向代理
+        proxy_cookie_domain: 'www.domain2.com www.domain1.com',  // 修改cookie里域名
+        index: 'index.html index.htm',
 
-        # 当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用
-        add_header Access-Control-Allow-Origin http://www.domain1.com;  #当前端只跨域不带cookie时，可为*
-        add_header Access-Control-Allow-Credentials true;
+        // 当用webpack-dev-server等中间件代理接口访问nignx时，此时无浏览器参与，故没有同源限制，下面的跨域配置可不启用
+        Access-Control-Allow-Origin: 'http://www.domain1.com';  // 当前端只跨域不带cookie时，可为*
+        Access-Control-Allow-Credentials: true;
     }
 }
 ```
@@ -2078,7 +2078,7 @@ GET**可以带request body，但不能保证一定能被接收到**。如果你�
 * 301 (Moved Permanently)   永久性重定向，表示请求的资源被分配了新的URL，之后应使用更改的URL 
 * 302 (Found/找到)  临时性重定向，表示请求的资源被分配了新的URL，希望本次访问使用新的URL 
 * 303 (See Other/参见其他信息)  临时重定向，必须使用get方式的请求
-* 400 (Bad Request)  表示请求报文中存在语法错误； 
+* 400 (Bad Request)  表示请求报文中存在语法错误
 * 401 (Unauthorized/未授权)   未经许可，需要通过HTTP认证 协议格式出现了问题
 *  403 (Forbidden/禁止)  服务器拒绝了你的请求
 *  404 (Not Found/未找到)  找不到系统资源

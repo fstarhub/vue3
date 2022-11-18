@@ -5,7 +5,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-02-24 11:17:13
+ * @LastEditTime: 2022-11-17 14:53:29
 -->
 
 # html
@@ -947,7 +947,7 @@ PS:防止CSRF:就是让你的每个请求都带一个从cookie中拿到的key, �
 
 **3.fetch**
 
-```jsx
+```js
 try {
   let response = await fetch(url);
   let data = response.json();
@@ -964,24 +964,20 @@ fetch号称是AJAX的替代品，是在ES6出现的，使用了ES6中的promise�
  坦白说，上面的理由对我来说完全没有什么说服力，因为不管是Jquery还是Axios都已经帮我们把xhr封装的足够好，使用起来也足够方便，为什么我们还要花费大力气去学习fetch？
  我认为fetch的优势主要优势就是：
 
-```jsx
-1.  语法简洁，更加语义化
-2.  基于标准 Promise 实现，支持 async/await
-3.  同构方便，使用 [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
+ > 1.语法简洁，更加语义化
+2.基于标准 Promise 实现，支持 async/await
+3.同构方便，使用 [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
 4.更加底层，提供的API丰富（request, response）
 5.脱离了XHR，是ES规范里新的实现方式
-```
 
 最近在使用fetch的时候，也遇到了不少的问题：
  fetch是一个低层次的API，你可以把它考虑成原生的XHR，所以使用起来并不是那么舒服，需要进行封装。
  例如：
 
-```css
-1）fetch只对网络请求报错，对400，500都当做成功的请求，服务器返回 400，500 错误码时并不会 reject，只有网络错误这些导致请求不能完成时，fetch 才会被 reject。
+> 1）fetch只对网络请求报错，对400，500都当做成功的请求，服务器返回 400，500 错误码时并不会 reject，只有网络错误这些导致请求不能完成时，fetch 才会被 reject。
 2）fetch默认不会带cookie，需要添加配置项： fetch(url, {credentials: 'include'})
 3）fetch不支持abort，不支持超时控制，使用setTimeout及Promise.reject的实现的超时控制并不能阻止请求过程继续在后台运行，造成了流量的浪费
 4）fetch没有办法原生监测请求的进度，而XHR可以
-```
 
 **总结：axios既提供了并发的封装，也没有fetch的各种问题，而且体积也较小，当之无愧现在最应该选用的请求的方式**
 
@@ -1012,8 +1008,8 @@ math.add(2,4)
 
 ## watch和computed
 
-1. 加载时先computed在watch
-2. 触发某一事件，先methods在再watch
+1. 加载时先computed再watch
+2. 触发某一事件，先methods再watch
 
 **watch**：支持异步（不支持缓存），数据变化会直接触发相应操作（immediate，deep）
 
@@ -1021,7 +1017,7 @@ math.add(2,4)
 
 ## v-if vs v-show
 
-`v-if` 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听器和子组件适当地被销毁和重建。
+`v-if` 是“真正”的条件渲染，因为它会确保在切换过程中条件块内的事件监听和子组件适当地被销毁和重建。
 
 `v-if` 也是**惰性的**：如果在初始渲染时条件为假，则什么也不做——直到条件第一次变为真时，才会开始渲染条件块。
 
@@ -1062,7 +1058,7 @@ math.add(2,4)
 
 这个默认的模式是高效的，但是**只适用于不依赖子组件状态或临时 DOM 状态 (例如：表单输入值) 的列表渲染输出**。
 
-为了给 Vue 一个提示，以便它能跟踪每个节点的身份，从而重用和重新排序现有元素，你需要为每项提供一个唯一 `key` attribute：
+为了给 Vue 一个提示，以便它能**跟踪每个节点的身份，从而重用和重新排序现有元素**，你需要为每项提供一个唯一 `key` attribute：
 
 ```
 <div v-for="item in items" v-bind:key="item.id">

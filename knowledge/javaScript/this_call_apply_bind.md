@@ -3,8 +3,8 @@
  * @Version: 3.0
  * @Autor: 冯帅
  * @Date: 2021-07-13 15:35:24
- * @LastEditors: 冯帅
- * @LastEditTime: 2021-07-13 18:56:30
+ * @LastEditors: fengshuai
+ * @LastEditTime: 2022-11-24 16:57:20
 -->
 ## this
 ### 什么是this
@@ -258,8 +258,7 @@ MDN中对于箭头函数这一部分是这样描述的：
 
 #### HTML标签内联事件处理函数
 **this指向所在的DOM元素**
-`<button onclick="console.log(this);">Click Me</button>
-`
+`<button onclick="console.log(this);">Click Me</button>`
 #### jQuery的this
 **在许多情况下JQuery的this都指向DOM元素节点。**
   ```js

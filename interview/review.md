@@ -6,7 +6,7 @@
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
  * @LastEditTime: 2022-11-17 14:53:29
--->
+  -->
 
 # html
 
@@ -199,15 +199,15 @@ geolacation定位用户位置信息
    * 群组
    * 属性
    * 伪元素
-1. 边框圆角
-2. 盒阴影
-3. 背景
-4. 渐变
-5. 过渡
-6. 变换
-7. 动画
-8. 伸缩盒
-9. 多列
+2. 边框圆角
+3. 盒阴影
+4. 背景
+5. 渐变
+6. 过渡
+7. 变换
+8. 动画
+9. 伸缩盒
+10. 多列
 
 ### 选择器
 
@@ -611,7 +611,7 @@ keyframes-selector：必写项，动画持续时间的百分比
      75%  {background-color:green; left:0px; top:200px;}
      100% {background-color:red; left:0px; top:0px;}
    }
-   
+
    /* 应用动画的元素 */
    div {
      width: 100px;
@@ -663,13 +663,13 @@ keyframes-selector：必写项，动画持续时间的百分比
 
 5. inline-block：元素呈现为内联盒子内的块盒子
 
-6.  inline-table：元素呈现为内联表格（类似 <table>），表格前后没有换行符
+6. inline-table：元素呈现为内联表格（类似 <table>），表格前后没有换行符
 
-7.  list-item：元素呈现为列表
+7. list-item：元素呈现为列表
 
 8. marker：该值在盒子前后设置内容作为标记（与 :before 和 :after 伪元素一起使用，否则该值与 "inline" 是相同的） 
 
-9.  none：元素不会被显示
+9. none：元素不会被显示
 
 10. run-in：元素呈现为块级或内联元素，取决于上下文
 
@@ -734,10 +734,10 @@ keyframes-selector：必写项，动画持续时间的百分比
 产生原因： 一个盒子里使用了CSS float浮动属性，导致父级对象盒子不能被撑开
 
 1. 父级添加伪元素：after  clear：both
-3. 父级：定义高度
-4. 父级：overflow：hidder/auto
-5. 父级：浮动
-6. 父级：display：table
+2. 父级：定义高度
+3. 父级：overflow：hidder/auto
+4. 父级：浮动
+5. 父级：display：table
 
 ## 伪类和伪元素
 
@@ -965,19 +965,19 @@ fetch号称是AJAX的替代品，是在ES6出现的，使用了ES6中的promise�
  我认为fetch的优势主要优势就是：
 
  > 1.语法简洁，更加语义化
-2.基于标准 Promise 实现，支持 async/await
-3.同构方便，使用 [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
-4.更加底层，提供的API丰富（request, response）
-5.脱离了XHR，是ES规范里新的实现方式
+ > 2.基于标准 Promise 实现，支持 async/await
+ > 3.同构方便，使用 [isomorphic-fetch](https://github.com/matthew-andrews/isomorphic-fetch)
+ > 4.更加底层，提供的API丰富（request, response）
+ > 5.脱离了XHR，是ES规范里新的实现方式
 
 最近在使用fetch的时候，也遇到了不少的问题：
  fetch是一个低层次的API，你可以把它考虑成原生的XHR，所以使用起来并不是那么舒服，需要进行封装。
  例如：
 
 > 1）fetch只对网络请求报错，对400，500都当做成功的请求，服务器返回 400，500 错误码时并不会 reject，只有网络错误这些导致请求不能完成时，fetch 才会被 reject。
-2）fetch默认不会带cookie，需要添加配置项： fetch(url, {credentials: 'include'})
-3）fetch不支持abort，不支持超时控制，使用setTimeout及Promise.reject的实现的超时控制并不能阻止请求过程继续在后台运行，造成了流量的浪费
-4）fetch没有办法原生监测请求的进度，而XHR可以
+> 2）fetch默认不会带cookie，需要添加配置项： fetch(url, {credentials: 'include'})
+> 3）fetch不支持abort，不支持超时控制，使用setTimeout及Promise.reject的实现的超时控制并不能阻止请求过程继续在后台运行，造成了流量的浪费
+> 4）fetch没有办法原生监测请求的进度，而XHR可以
 
 **总结：axios既提供了并发的封装，也没有fetch的各种问题，而且体积也较小，当之无愧现在最应该选用的请求的方式**
 
@@ -1408,7 +1408,7 @@ JSONP优点是简单兼容性好，可用于解决主流浏览器的跨域数据
 - 服务器接收到请求后，需要进行特殊的处理：把传递进来的函数名和它需要给你的数据拼接成一个字符串,例如：传递进去的函数名是show，它准备好的数据是`show('我不爱你')`。
 - 最后服务器把准备的数据通过HTTP协议返回给客户端，客户端再调用执行之前声明的回调函数（show），对返回的数据进行操作
 
-#### 二. cors跨域
+#### 二. cors跨域(正向代理)
 
 **CORS 需要浏览器和后端同时支持。IE 8 和 9 需要通过 XDomainRequest 来实现**。
 
@@ -2040,7 +2040,7 @@ GET**可以带request body，但不能保证一定能被接收到**。如果你�
 **历史记录**：GET请求参数会被完整保留在浏览历史记录里，而POST中的参数不会被保留。
 **编码方式**：GET请求只能进行url编码，而POST支持多种编码方式。
 **对参数的数据类型**：GET只接受ASCII字符，而POST没有限制 
-**幂等性**：  GET请求有幂等性，但是POST请求没有，就是说我们如果使用GET请求做增删改查的时候，遇到网络不好可能会多次操作，造成数据库的混乱  但是使用POST就不会有这种情况 
+**幂等性**：  GET请求有幂等性，但是POST请求没有 
 
 
 ## 状态码
@@ -2076,10 +2076,10 @@ GET**可以带request body，但不能保证一定能被接收到**。如果你�
 * 303 (See Other/参见其他信息)  临时重定向，必须使用get方式的请求
 * 400 (Bad Request)  表示请求报文中存在语法错误
 * 401 (Unauthorized/未授权)   未经许可，需要通过HTTP认证 协议格式出现了问题
-*  403 (Forbidden/禁止)  服务器拒绝了你的请求
-*  404 (Not Found/未找到)  找不到系统资源
-*  500 (Internal Server Error/内部服务器错误)  服务器读取信息之中出错
-*  503 (Service Unavailable/服务无法获得) 表示服务器由于在维护或已经超载而无法响应
+* 403 (Forbidden/禁止)  服务器拒绝了你的请求
+* 404 (Not Found/未找到)  找不到系统资源
+* 500 (Internal Server Error/内部服务器错误)  服务器读取信息之中出错
+* 503 (Service Unavailable/服务无法获得) 表示服务器由于在维护或已经超载而无法响应
 
 # [数据结构与算法](https://blog.csdn.net/ityqing/article/details/82838524)
 
@@ -2156,7 +2156,7 @@ void print(int n) {
 
 1.  数组（Array）是一种线性表数据结构。它用一组连续的内存空间，来存储一组具有相同类型的数据。
 2.  连续的内存空间和相同类型的数据(随机访问的前提)
-3. 优点：两限制使得具有随机访问的特性缺点：删除，插入数据效率低
+3.  优点：两限制使得具有随机访问的特性缺点：删除，插入数据效率低
 
 ### 2.2 链表
 
@@ -2211,7 +2211,7 @@ void print(int n) {
 
 1.  队列跟栈一样,也是一种抽象的数据结构。
 
-2. 具有先进先出的特性,支持在队尾插入元素,在队头删除元素。
+2.  具有先进先出的特性,支持在队尾插入元素,在队头删除元素。
 
 实现: 队列可以用数组来实现,也可以用链表来实现
 

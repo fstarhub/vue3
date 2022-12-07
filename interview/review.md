@@ -5,7 +5,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-11-17 14:53:29
+ * @LastEditTime: 2022-11-28 23:04:01
   -->
 
 # html
@@ -1843,18 +1843,25 @@ base64，MD5，sha1
 
 ## 1. XSS（跨站脚本攻击）
 
-XSS攻击：它允许恶意web用户将代码植入到提供给其他用户使用的页面中
+> Cross-Site Scripting（跨站脚本攻击）简称 XSS，是一种代码注入攻击。攻击者通过在目标网站上注入恶意脚本，使之在用户的浏览器上运行。利用这些恶意脚本，攻击者可获取用户的敏感信息如 Cookie、SessionID 等，进而危害数据安全。
 
-常见SXX攻击：DOM-based型，反射型，存储型
+为了和 CSS 区分，这里把攻击的第一个字母改成了 X，于是叫做 XSS。
+
+常见SXX攻击：DOM-based型，反射型xss，存储型xss
+
+预防措施：
+1. 设置 Cookie 的 HttpOnly 属性，禁止JavaScript读取cookie
+2. 验证码：防止脚本冒充用户提交危险操作
 
 ## 2. CSRF（跨站请求伪造）
 
-通过在你的输入文本当中或者HTML标签中插入js脚本攻击
+> CSRF（Cross-site request forgery）跨站请求伪造：攻击者诱导受害者进入第三方网站，在第三方网站中，向被攻击网站发送跨站请求。利用受害者在被攻击网站已经获取的注册凭证，绕过后台的用户验证，达到冒充用户对被攻击的网站执行某项操作的目的
 
 解决方法：
 
-1. 使用token：表单提交携带token，验证有效则允许访问，否则拒绝访问
-2. Referer验证：Referer指页面请求来源
+1. 同源检测：Origin Header，Referer Header
+2. 使用CSRF token：表单提交携带token，验证有效则允许访问，否则拒绝访问
+3. cookie设置SameSite
 
 ## 3. ifream安全隐患问题
 

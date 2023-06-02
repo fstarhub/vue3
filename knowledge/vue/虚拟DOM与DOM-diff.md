@@ -4,7 +4,7 @@
  * @Date: 2021-08-04 14:44:31
  * @LastEditors: fengshuai
  * @LastEditTime: 2021-08-04 15:21:05
--->
+  -->
 ## 虚拟 DOM 与 DOM-diff
 ### 前言
 
@@ -15,8 +15,6 @@
 ![](https://p1-jj.byteimg.com/tos-cn-i-t2oaga2asx/gold-user-assets/2019/3/20/1699a54e3737e10c~tplv-t2oaga2asx-image.image)
 
 这个目录结构是用**create-react-app脚手架**
-
-
 
 ```
 // 全局安装
@@ -293,9 +291,9 @@ export default diff;
 #### 比较规则
 
 - 新的DOM节点不存在{type: 'REMOVE', index}
-- 文本的变化{type: 'TEXT', text: 1}
 - 当节点类型相同时，去看一下属性是否相同，产生一个属性的补丁包{type: 'ATTR', attr: {class: 'list-group'}}
 - 节点类型不相同，直接采用替换模式{type: 'REPLACE', newNode}
+- 文本的变化{type: 'TEXT', text: 1}
 
 根据这些**规则**，我们再来看一下diff代码中的**walk方法**这位关键先生
 

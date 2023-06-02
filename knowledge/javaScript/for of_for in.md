@@ -4,7 +4,7 @@
  * @Date: 2021-08-11 10:35:38
  * @LastEditors: fengshuai
  * @LastEditTime: 2021-08-11 10:41:04
--->
+  -->
 
 ## for of / for in
 
@@ -140,7 +140,7 @@ index:C value:bar-C
 
 例1这个对象,没有 Symbol.iterator这个属性,所以使用 for of会报 obj is not iterable
 
-for of 不同与 forEach, 它可以与 break、continue和return 配合使用,也就是说 for of 循环可以随时退出循环。
+for of 不同与 forEach, 它可以与 **break、continue和return 配合使用**,也就是说 for of 循环可以随时退出循环。
 
 提供了遍历所有数据结构的统一接口
 

@@ -5,7 +5,7 @@
  * @Date: 2021-07-28 10:27:24
  * @LastEditors: 冯帅
  * @LastEditTime: 2021-08-19 00:58:22
--->
+  -->
 
 ## MVVM原理
 
@@ -425,4 +425,14 @@ MVVM.prototype = {
 ```
 
 这里主要还是利用了`Object.defineProperty()`这个方法来劫持了vm实例对象的属性的读写权，使读写vm实例的属性转成读写了`vm._data`的属性值，达到鱼目混珠的效果 
+
+### vue实现原理总结
+
+1. 首先，在实例化的过程中，把一个普通 JavaScript 对象传给 Vue 实例的 data选项，Vue 将遍历此对象所有的属性，并使用 Object.defineProperty 把这些属性全部转为 getter/setter。
+2. Dep 是一个依赖收集器。data 下的每一个属性都有一个唯一的 Dep 对象，在 get 中收集仅针对该属性的依赖，然后在 set 方法中触发所有收集的依赖。
+3. 在Watcher中对表达式求值，从而触发数据的get。在求值之前将当前Watch实例设置到全局，使用pushTarget(this)方法。
+4. 在get()中收集依赖，this.subs.push(sub),set的时候触发回调Dep.notify()。
+5. Compile中首先将template或el编译成render函数，render函数返回一个虚拟DOM对象（将模板转为 render 函数的时候，实际是先生成的抽象语法树（AST），再将抽象语法树转成的 render 函数）
+6. 当 vm._render 执行的时候，所依赖的变量就会被求值，并被收集为依赖。按照Vue中 watcher.js 的逻辑，当依赖的变量有变化时不仅仅回调函数被执行，实际上还要重新求值，即还要执行一遍
+7. 如果还没有 prevVnode 说明是首次渲染，直接创建真实DOM。如果已经有了 prevVnode 说明不是首次渲染，那么就采用 patch 算法进行必要的DOM操作。这就是Vue更新DOM的逻辑。
 

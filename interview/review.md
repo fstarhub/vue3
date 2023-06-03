@@ -5,7 +5,7 @@
  * @Autor: 冯帅
  * @Date: 2021-08-09 23:36:27
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-11-28 23:04:01
+ * @LastEditTime: 2023-06-03 17:31:43
   -->
 
 # html
@@ -984,8 +984,9 @@ fetch号称是AJAX的替代品，是在ES6出现的，使用了ES6中的promise�
 ## commonjs和ES6 module区别
 
 - 1、Commonjs是拷贝输出，ES6模块化是引用输出
-- 2、Commonjs是运行时加载，ES6模块化是编译时输出接口
+- 2、Commonjs是运行时加载模块，ES6模块化是编译时就确定模块的依赖
 - 3、Commonjs是单个值导出，ES6模块化可以多个值导出
+- 4、ES6在编译时会将所有import提升到顶部，common.js不会提升require
 - 4、Commonjs是动态语法可写在函数体中，ES6模块化静态语法只能写在顶层
 - 5、Commonjs的this是当前模块化，ES6模块化的this是undefined
 

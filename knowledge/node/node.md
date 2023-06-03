@@ -3,9 +3,9 @@
  * @Version: 3.0
  * @Autor: 冯帅
  * @Date: 2021-08-19 00:00:10
- * @LastEditors: 冯帅
- * @LastEditTime: 2021-08-19 00:00:23
--->
+ * @LastEditors: fengshuai
+ * @LastEditTime: 2023-06-03 16:56:54
+     -->
 # node
 
 ## node介绍
@@ -41,21 +41,132 @@ node模块化
 
 ## module.export 和 require
 
-暴露模块：
+通过exports只能使用.的方式来向外暴露内部变量
 
 ```js
 // test.js
-exports.x = 'hello world'
-exports.fn = function() {}
+exports.xxx = xxx
 ```
 
-引入模块：
+通过module.exports既可以通过点的形式，也可以直接赋值
 
 ```js
-var md = requie('./test.js')
-console.log(md.x)
+// test.js
+const name = 'hello'
+const getName = function() {
+  console.log(123)
+}
+module.exports.name === name
+module.exports = { getName }
 ```
 
+引入模块
+
+```js
+var md = require('../test.js')
+var { getName } = require('../test.js')
+```
+
+## 引入其他模块
+
+在node中，通过require（）函数来引入外部模块，require（）可以传递一个文件的路径作为参数，node将会自动genuine该路径引入外部模块，路径使用.或..开头
+
+使用require（）引入模块后，该函数会返回一个对象，这个对象代表是引入的模块
+
+使用require（）引入外部模块时，使用的就是i模块标识，我们可以通过模块表示来找到模块
+
+**模块分类**：
+
+1. 核心模块
+
+* 有node引擎提供的模块
+
+2. 文件模块
+
+* 由用户自己创建的模块
+
+## global
+
+node有一个全局变量global，通网页中的window类似
+
+全局中创建的变量会作为global的属性保存
+
+全局中创建的方法会作为global的方法保存
+
+node在执行模块中的代码时，它首先在代码的最顶部添加如下代码
+
+function (exports, require, module, \_filename,\_dirname) {
+
+在代码的最底部添加如下代码
+
+}
+
+实际上模块中的代码都是包裹在一个函数中执行的，并且在函数执行时，同事传递了5个实参
+
+exports: 该对象用来将变量或函数暴露到外部
+
+require：函数，用来引入外部模块
+
+module：代表当前模块本身，exports就是module的属性，可以使用exports导出，也可以使用module.exports导出（module.exports === exports）
+
+filename：当前模块的完整路径
+
+dirname: 当前模块所在文件夹的完整路径
+
+## 包 package
+
+* commonjs的包规范允许我们将一组相关的模块组合到一起，形成一个完整的工具
+
+* commonjs的包规范由**包结构**和**包描述文件**二个部分组成
+* 包结构
+  * 用于组织包中的各个文件
+* 包描述文件
+  * 描述报的相关信息，以供外部读取分析
+
+### 包结构
+
+包实际上就是一个压缩文件，解压以后还原为目录，符合规范的目录，应该包含一下文件
+
+* package.json 描叙文件
+* bin 可执行二进制文件
+* lib js代码
+* doc 文档
+* test 测试单元
+
+### 包描述文件
+
+包描述文件用来表达非代码的信息，他是一个json格式的文件-package.json，位于包的根目录下，是包的重要组成成分
+
+package.json中的字段：name，description，version，可以words，maintainers，contributors，bugs，licences，repository，dependencies，homepage，OS，CPU，engine，builtin，directories，implements，scripts，author，bin，main，devDependencies.
+
+## NPM (Node Package Manager)
+
+* commonjs包规范的理论，NPM是其中一种实践
+* 对于node二言，NPM帮助其完成了第三方模块的发布，安装和依赖等。借助NPM，Node与第三方模块之间形成了一个很好地生态系统
+
+### npm命令
+
+npm -v：查看版本
+
+npm :帮助说明
+
+npm init 名： 创建一个package.json
+
+npm search 包名：搜索模块包
+
+npm install/i 包名：在当前目录安装包
+
+npm install/i 包名 -g: 全局模式安装包
+
+npm remove/r：删除包
+
+npm install 包名 --save：安装包并添加到依赖中
+
+npm install：下载项目依赖包
+
+## Node模块查找顺序
+
+当前node_modules  - 上一层 node_modules - 上一层 node_modules -直到磁盘的根目录，如果依然没有，则报错
 ## Buffer
 
  如果没有提供编码格式，文件操作以及很多网络操作就会将数据作为 Buffer 类型返回 

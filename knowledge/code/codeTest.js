@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2023-06-05 23:59:55
  * @LastEditors: fengshuai
- * @LastEditTime: 2023-06-09 23:25:37
+ * @LastEditTime: 2023-06-25 08:51:47
  */
 // 手写ajax
 // var ajax = new XMLHttpRequest()
@@ -67,7 +67,7 @@ function myNew(constructor, ...args) {
   return typeof result === 'Object' && result != null ? result : obj
 }
 // instanceof
-function myInstannsOf(obj, fn) {
+function myInstanceOf(obj, fn) {
   let proto = obj._proto_
   while(proto) {
     if (proto === fn.prototype) return true

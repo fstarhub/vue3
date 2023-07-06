@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2023-06-09 23:30:35
  * @LastEditors: fengshuai
- * @LastEditTime: 2023-06-13 23:32:35
+ * @LastEditTime: 2023-06-29 16:51:45
  */
 const isFunction = (data) => typeof data === 'function'
 
@@ -154,7 +154,7 @@ class MPromise{
       let result = []
       let count = 0
       for(let p of parmises) {
-        MPromise.resolve(p),then(res => {
+        MPromise.resolve(p).then(res => {
           resolve(res)
         }, err => {
           result[count] = err
@@ -212,4 +212,3 @@ class MPromise{
 //   console.log(res,'res')
 //   return p
 // })
-var 

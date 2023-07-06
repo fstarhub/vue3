@@ -1,0 +1,20 @@
+{
+  "include": [],
+  "exclude": [],
+  "extends": "",
+  "files": [],
+  "compilerOptions": {
+    "target": "ES2015",
+    "lib": "",
+    "module": "ES2015",
+    "outDir": "",
+    "outFile": "",
+    "rootDir": "",
+    "allowJs": false,
+    "checkJs": false,
+    "removeComments": false,
+    "noEmit": false,
+    "sourceMap": false,
+    "strict": false
+  }
+}

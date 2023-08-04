@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2021-06-18 19:31:42
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-03-15 20:34:26
+ * @LastEditTime: 2023-07-28 17:03:48
 -->
 <!--  -->
 <template>
@@ -22,7 +22,7 @@
 
 <script>
 // import {ref} from 'vue'
-import {reactive} from 'vue'
+import { ref} from 'vue'
 import {isRef, isReactive} from 'vue'
 export default {
   name: 'App',
@@ -40,14 +40,14 @@ export default {
      * -ref底层的本质其实就是reactive，系统会自动根据我们给ref传入的值将它转换成ref(xx) -> reactive({value: xx})
      * 3.ref注意点
      * -在vue中使用ref的值不用通过value获取
-     * -在js中使用ref的值不许通过value获取
+     * -在js中使用ref的值需要通过value获取
      */
   //setup函数是组合API的入口函数
   setup() {
     // let count = 0 // vue不能监听到这个变量
     // 定义一个count变量，初始值为0，变量发生改变后，vue会自动更新UI
-    // let count = ref(0)
-    let count = reactive({vlaue: 19})
+    let count = ref(0)
+    // let count = reactive({vlaue: 19})
     function clickFn () {
       // alert('diainjile')
       console.log(isRef(count))

@@ -3,7 +3,7 @@
  * @Autor: fengshuai
  * @Date: 2021-06-18 10:20:05
  * @LastEditors: fengshuai
- * @LastEditTime: 2022-03-29 12:43:19
+ * @LastEditTime: 2023-07-28 17:26:49
 -->
 # vue3.0特点
 ## 1. vue3.0六大亮点
@@ -127,8 +127,8 @@
 
 ### 4.3 常用函数
 
-1. ref：本质ref(xx) -> reactive({value: xx})，模板中直接使用ref生明的变量，复制，修改响应式数据不会影响以前的数据，数据发生改变，界面就会自动更新
-2. reactive：必须传递一个对象，使用时用.value获取其值
+1. ref：本质ref(xx) -> reactive({value: xx})，模板中直接使用ref生明的变量，复制，修改响应式数据不会影响以前的数据，数据发生改变，界面就会自动更新，使用时用.value获取其值
+2. reactive：必须传递一个对象
 3. isRef： 检查一个值是否为一个 ref 对象 
 4. isReactive： 检查一个对象是否是由 reactive 创建的响应式代理 
 5. shallowRef：本质shallowRef -> shallowReactive({value: 10})，通过shallowRef创建数据，那么vue监听的是.value的变化，并不是第一层的变化

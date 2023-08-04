@@ -174,14 +174,14 @@ npm包管理器
 
 **2. 更新阶段**：由组件内部this.setState()或父组件重新render触发
 
- 	1. shouldComponentUpdate()
- 	2. componentWillUpdate()
- 	3. render()
- 	4. componentDidUpdate()
+   	1. shouldComponentUpdate()
+     2. componentWillUpdate()
+      3. render()
+      4. componentDidUpdate()
 
 **3. 卸载组件**：由ReactDOM.unmountComponentAtNode()触发
 
- 	1. componentWillUnmount()
+   	1. componentWillUnmount()
 
 ### 生命周期流程（新）
 
@@ -322,7 +322,7 @@ module.exports = function(app){
     {/* 下面是react-router-dom 注册路由  5.x.x版本写法 */}
     {/* <Route path='/home' component={home}></Route>
     <Route path='/about' component={about}></Route> */}
-   
+
     {/* 下面是react-router-dom 注册路由 6.x.x版本写法 */}
     <Routes>
       <Route path="/home" element={<Home />} />
@@ -354,31 +354,31 @@ module.exports = function(app){
     路由组件：接收到三个固定的属性
 
         history:
-        
+
             go: ƒ go(n)
-        
+
             goBack: ƒ goBack()
-        
+
             goForward: ƒ goForward()
-        
+
             push: ƒ push(path, state)
-        
+
             replace: ƒ replace(path, state)
-        
+
         location:
-        
+
             pathname: "/about"
-        
+
             search: ""
-        
+
             state: undefined
-        
+
         match:
-        
+
             params: {}
-        
+
             path: "/about"
-        
+
             url: "/about"
 
 ### 路由组件传参（V5版本）
@@ -544,7 +544,6 @@ module.exports = function(app){
 
    const store = createStore(allReducer, composeWithDevTools(applyMiddleware(thunk)))
 
-   
 
 ## 浏览器刷新样式丢失问题
 
@@ -816,7 +815,7 @@ componentDidCatch(error, info) {
 
 1.  不得改写参数数据
 2.  不会产生任何副作用，例如网络请求，输入和输出设备
-3. 不能调用Date.now()或者Math.random()等不纯的方法
+3.  不能调用Date.now()或者Math.random()等不纯的方法
 
 **redux的reducer函数必须是一个纯函数**
 
